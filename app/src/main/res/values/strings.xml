@@ -3,4 +3,14 @@
     <string name="bottom_navigation_title_feed">フィード</string>
     <string name="bottom_navigation_title_search">検索</string>
     <string name="bottom_navigation_title_settings">設定</string>
+    <string name="navigation_item_title_overall">総合</string>
+    <string name="navigation_item_title_general">一般</string>
+    <string name="navigation_item_title_social">世の中</string>
+    <string name="navigation_item_title_economics">政治と経済</string>
+    <string name="navigation_item_title_life">暮らし</string>
+    <string name="navigation_item_title_knowledge">学び</string>
+    <string name="navigation_item_title_technology">テクノロジー</string>
+    <string name="navigation_item_title_fun">おもしろ</string>
+    <string name="navigation_item_title_entertainment">エンタメ</string>
+    <string name="navigation_item_title_anime_and_game">アニメとゲーム</string>
 </resources>

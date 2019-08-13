@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/colorSurface"
+    android:orientation="vertical">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/textViewOverall"
+        style="@style/NavigationItems"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/navigation_item_title_overall" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/textViewGeneral"
+        style="@style/NavigationItems"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/navigation_item_title_general" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/textViewSocial"
+        style="@style/NavigationItems"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/navigation_item_title_social" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/textViewEconomics"
+        style="@style/NavigationItems"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/navigation_item_title_economics" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/textViewLife"
+        style="@style/NavigationItems"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/navigation_item_title_life" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/textViewKnowledge"
+        style="@style/NavigationItems"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/navigation_item_title_knowledge" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/textViewTechnology"
+        style="@style/NavigationItems"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/navigation_item_title_technology" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/textViewFun"
+        style="@style/NavigationItems"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/navigation_item_title_fun" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/textViewEntertainment"
+        style="@style/NavigationItems"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/navigation_item_title_entertainment" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/textViewAnimeAndGame"
+        style="@style/NavigationItems"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/navigation_item_title_anime_and_game" />
+
+</androidx.appcompat.widget.LinearLayoutCompat>
