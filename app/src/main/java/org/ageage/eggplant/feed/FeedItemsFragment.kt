@@ -8,6 +8,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_feed_items.*
@@ -43,6 +45,10 @@ class FeedItemsFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         Timber.d("onActivityCreated")
         super.onActivityCreated(savedInstanceState)
+
+        val dividerItemDecoration = DividerItemDecoration(context, LinearLayoutManager.VERTICAL)
+        contentsList.addItemDecoration(dividerItemDecoration)
+
         swipeRefreshLayout.setOnRefreshListener {
             fetchRss()
         }
