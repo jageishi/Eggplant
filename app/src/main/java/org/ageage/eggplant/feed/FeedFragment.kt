@@ -38,7 +38,7 @@ class FeedFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         Timber.d("onViewCreated")
         super.onViewCreated(view, savedInstanceState)
-        val adapter = FeedPagerAdapter(fragmentManager, context)
+        val adapter = FeedPagerAdapter(childFragmentManager, context)
         Mode.values().forEach { adapter.addContent(category, it) }
         viewPager.adapter = adapter
         tabLayout.setupWithViewPager(viewPager)
