@@ -10,4 +10,6 @@ class FeedItemHolder(view: View) : RecyclerView.ViewHolder(view) {
     val textViewTitle: AppCompatTextView = view.findViewById(R.id.title)
     val textViewBookmarkCount: AppCompatTextView = view.findViewById(R.id.bookmarkCount)
     val thumbnail: AppCompatImageView = view.findViewById(R.id.thumbnail)
+    val favicon: AppCompatImageView = view.findViewById(R.id.favicon)
+    val linkUrl: AppCompatTextView = view.findViewById(R.id.linkUrl)
 }

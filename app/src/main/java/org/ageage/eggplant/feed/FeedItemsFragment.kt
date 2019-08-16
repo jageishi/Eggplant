@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_feed_items.*
 import org.ageage.eggplant.*
@@ -23,6 +24,7 @@ class FeedItemsFragment : Fragment() {
 
     private lateinit var category: Category
     private lateinit var mode: Mode
+    private val compositeDisposable: CompositeDisposable = CompositeDisposable()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         Timber.d("onCreate")
@@ -57,49 +59,36 @@ class FeedItemsFragment : Fragment() {
         fetchRss()
     }
 
-    override fun onResume() {
-        Timber.d("onResume")
-        super.onResume()
-    }
-
     override fun onPause() {
         Timber.d("onPause")
         super.onPause()
-    }
-
-    override fun onStop() {
-        Timber.d("onStop")
-        super.onStop()
-    }
-
-    override fun onDestroy() {
-        Timber.d("onDestroy")
-        super.onDestroy()
+        compositeDisposable.clear()
     }
 
     private fun fetchRss() {
         Timber.d("fetchRss")
         val client = HttpClient()
-        client.get("https://b.hatena.ne.jp${mode.url}${category.url}.rss")
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(
-                { list ->
-                    if (list != null) {
+        compositeDisposable.add(
+            client.get("https://b.hatena.ne.jp${mode.url}${category.url}.rss")
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                    { list ->
                         contentsList.adapter =
-                            FeedItemAdapter(list,
-                                object : FeedItemAdapter.OnClickItemListener {
-                                    override fun onClickItem(item: Item) {
-                                        showBrowser(item.link)
-                                    }
-                                })
+                            context?.let {
+                                FeedItemAdapter(
+                                    it, list,
+                                    object : FeedItemAdapter.OnClickItemListener {
+                                        override fun onClickItem(item: Item) {
+                                            showBrowser(item.link)
+                                        }
+                                    })
+                            }
+                        swipeRefreshLayout.isRefreshing = false
+                    }, {
+                        swipeRefreshLayout.isRefreshing = false
                     }
-
-                    swipeRefreshLayout.isRefreshing = false
-                }, {
-                    swipeRefreshLayout.isRefreshing = false
-                }
-            )
+                ))
     }
 
     private fun showBrowser(uri: String) {

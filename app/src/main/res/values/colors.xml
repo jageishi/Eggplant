@@ -10,6 +10,7 @@
     <color name="colorOnAccent">@color/black</color>
     <color name="colorOnBackground">@color/black</color>
     <color name="colorOnSurface">@color/black</color>
+    <color name="colorBookmarkCount">#EE82EE</color>
 
     <color name="black">#000000</color>
     <color name="white">#FFFFFF</color>

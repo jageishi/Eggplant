@@ -41,7 +41,7 @@ class HttpClient() {
 
             when (eventType) {
                 XmlPullParser.START_TAG -> if (tagName == "item") {
-                    item = Item("", "", "", "", "")
+                    item = Item("", "", "", "", "", "")
                 }
                 XmlPullParser.TEXT -> {
                     text = xpp.text ?: ""
@@ -52,7 +52,10 @@ class HttpClient() {
                     } else if (tagName == "title") {
                         item?.let { it.title = text }
                     } else if (tagName == "link") {
-                        item?.let { it.link = text }
+                        item?.let {
+                            it.link = text
+                            it.faviconUrl = "http://favicon.hatena.ne.jp/?url=$text"
+                        }
                     } else if (tagName == "description") {
                         item?.let { it.description = text }
                     } else if (tagName == "bookmarkcount") {

@@ -15,4 +15,5 @@
     <string name="navigation_item_title_anime_and_game">アニメとゲーム</string>
     <string name="feed_mode_title_hot_entry">人気</string>
     <string name="feed_mode_title_entry_list">新着</string>
+    <string name="feed_bookmark_count">%s users</string>
 </resources>

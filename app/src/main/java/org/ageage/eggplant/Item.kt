@@ -5,5 +5,6 @@ data class Item(
     var link: String,
     var description: String,
     var bookmarkCount: String,
-    var imageUrl: String
+    var imageUrl: String,
+    var faviconUrl: String
 )
