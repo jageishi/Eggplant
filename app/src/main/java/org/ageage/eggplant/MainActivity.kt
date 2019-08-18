@@ -1,9 +1,11 @@
 package org.ageage.eggplant
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.gms.oss.licenses.OssLicensesMenuActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import org.ageage.eggplant.feed.FeedFragment
 
@@ -29,6 +31,10 @@ class MainActivity : AppCompatActivity(), BottomSheetFragment.OnNavigationItemCl
                 val fragment = BottomSheetFragment.newInstance(selectedCategory)
                 fragment.show(supportFragmentManager, "a")
             }
+            R.id.license -> {
+                startActivity(Intent(this, OssLicensesMenuActivity::class.java))
+            }
+
         }
         return super.onOptionsItemSelected(item)
     }
