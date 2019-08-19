@@ -74,17 +74,19 @@ class FeedItemsFragment : Fragment() {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                     { list ->
-                        contentsList.adapter =
-                            context?.let {
-                                FeedItemAdapter(
-                                    it, list,
-                                    object : FeedItemAdapter.OnClickItemListener {
-                                        override fun onClickItem(item: Item) {
-                                            showBrowser(item.link)
-                                        }
-                                    })
-                            }
-                        swipeRefreshLayout.isRefreshing = false
+                        contentsList?.let { contentsView ->
+                            contentsView.adapter =
+                                context?.let {
+                                    FeedItemAdapter(
+                                        it, list,
+                                        object : FeedItemAdapter.OnClickItemListener {
+                                            override fun onClickItem(item: Item) {
+                                                showBrowser(item.link)
+                                            }
+                                        })
+                                }
+                            swipeRefreshLayout.isRefreshing = false
+                        }
                     }, {
                         swipeRefreshLayout.isRefreshing = false
                     }
