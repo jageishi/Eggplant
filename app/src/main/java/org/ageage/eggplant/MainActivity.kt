@@ -29,7 +29,7 @@ class MainActivity : AppCompatActivity(), BottomSheetFragment.OnNavigationItemCl
         when (item?.itemId) {
             android.R.id.home -> {
                 val fragment = BottomSheetFragment.newInstance(selectedCategory)
-                fragment.show(supportFragmentManager, "a")
+                fragment.show(supportFragmentManager, "BottomSheet")
             }
             R.id.license -> {
                 startActivity(Intent(this, OssLicensesMenuActivity::class.java))
