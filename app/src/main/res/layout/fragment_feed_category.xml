@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".feed.FeedFragment">
+    tools:context=".feed.FeedCategoryFragment">
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/viewPager"
@@ -12,11 +12,11 @@
         android:layout_height="match_parent">
 
         <com.google.android.material.tabs.TabLayout
-            android:id="@+id/tabLayoutCategory"
+            android:id="@+id/tabLayoutMode"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:tabIndicatorColor="@color/colorPrimary"
-            app:tabMode="scrollable"
+            app:tabMode="fixed"
             app:tabRippleColor="@color/colorPrimary"
             app:tabSelectedTextColor="@color/colorPrimary"
             app:tabTextColor="@color/colorOnBackground" />

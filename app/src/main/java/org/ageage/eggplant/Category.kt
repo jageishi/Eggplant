@@ -1,36 +1,49 @@
 package org.ageage.eggplant
 
+import androidx.annotation.StringRes
+
 enum class Category(
-    val url: String
+    val url: String,
+    @StringRes val titleRes: Int
 ) {
     OVERALL(
-        ""
+        "",
+        R.string.tab_title_overall
     ),
     GENERAL(
-        "/general"
+        "/general",
+        R.string.tab_title_general
     ),
     SOCIAL(
-        "/social"
+        "/social",
+        R.string.tab_title_social
     ),
     ECONOMICS(
-        "/economics"
+        "/economics",
+        R.string.tab_title_economics
     ),
     LIFE(
-        "/life"
+        "/life",
+        R.string.tab_title_life
     ),
     KNOWLEDGE(
-        "/knowledge"
+        "/knowledge",
+        R.string.tab_title_knowledge
     ),
     IT(
-        "/it"
+        "/it",
+        R.string.tab_title_technology
     ),
     FUN(
-        "/fun"
+        "/fun",
+        R.string.tab_title_fun
     ),
     ENTERTAINMENT(
-        "/entertainment"
+        "/entertainment",
+        R.string.tab_title_entertainment
     ),
     GAME(
-        "/game"
+        "/game",
+        R.string.tab_title_anime_and_game
     );
 }
