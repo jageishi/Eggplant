@@ -3,7 +3,7 @@
     <item
         android:id="@+id/feed"
         android:icon="@drawable/ic_rss_feed_black_24dp"
-        android:title="@string/bottom_navigation_title_feed" />
+        android:title="@string/bottom_navigation_title_rss" />
 
     <item
         android:id="@+id/search"
