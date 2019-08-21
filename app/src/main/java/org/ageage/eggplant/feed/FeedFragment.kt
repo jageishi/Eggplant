@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import kotlinx.android.synthetic.main.fragment_feed.*
-import org.ageage.eggplant.Category
+import org.ageage.eggplant.Mode
 import org.ageage.eggplant.R
 import timber.log.Timber
 
@@ -30,10 +30,10 @@ class FeedFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         Timber.d("onViewCreated")
         super.onViewCreated(view, savedInstanceState)
-        val adapter = FeedCategoryPagerAdapter(childFragmentManager, context)
-        Category.values().forEach { adapter.addContent(it) }
-        viewPager.adapter = adapter
-        tabLayoutCategory.setupWithViewPager(viewPager)
+        val adapter = FeedModePagerAdapter(childFragmentManager, context)
+        Mode.values().forEach { adapter.addContent(it) }
+        viewPagerMode.adapter = adapter
+        tabLayoutMode.setupWithViewPager(viewPagerMode)
     }
 
     override fun onDestroy() {

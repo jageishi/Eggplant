@@ -7,16 +7,18 @@
     tools:context=".feed.FeedCategoryFragment">
 
     <androidx.viewpager.widget.ViewPager
-        android:id="@+id/viewPager"
+        android:id="@+id/viewPagerCategory"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <com.google.android.material.tabs.TabLayout
-            android:id="@+id/tabLayoutMode"
+            android:id="@+id/tabLayoutCategory"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/category_tab_background"
+            android:elevation="10dp"
             app:tabIndicatorColor="@color/colorPrimary"
-            app:tabMode="fixed"
+            app:tabMode="scrollable"
             app:tabRippleColor="@color/colorPrimary"
             app:tabSelectedTextColor="@color/colorPrimary"
             app:tabTextColor="@color/colorOnBackground" />

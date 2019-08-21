@@ -5,22 +5,21 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import kotlinx.android.synthetic.main.fragment_feed.viewPager
 import kotlinx.android.synthetic.main.fragment_feed_category.*
 import org.ageage.eggplant.Category
 import org.ageage.eggplant.Mode
 import org.ageage.eggplant.R
 
-private const val CATEGORY = "category"
+private const val MODE = "mode"
 
 class FeedCategoryFragment : Fragment() {
 
-    private lateinit var category: Category
+    private lateinit var mode: Mode
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            category = it.getSerializable(CATEGORY) as Category
+            mode = it.getSerializable(MODE) as Mode
         }
     }
 
@@ -34,19 +33,18 @@ class FeedCategoryFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val adapter = FeedItemsPagerAdapter(childFragmentManager, context)
-        Mode.values().forEach { adapter.addContent(category, it) }
-        viewPager.adapter = adapter
-        tabLayoutMode.setupWithViewPager(viewPager)
-
+        val adapter = FeedCategoryPagerAdapter(childFragmentManager, context)
+        Category.values().forEach { adapter.addContent(mode, it) }
+        viewPagerCategory.adapter = adapter
+        tabLayoutCategory.setupWithViewPager(viewPagerCategory)
     }
 
     companion object {
         @JvmStatic
-        fun newInstance(category: Category) =
+        fun newInstance(mode: Mode) =
             FeedCategoryFragment().also { f ->
                 f.arguments = Bundle().also { b ->
-                    b.putSerializable(CATEGORY, category)
+                    b.putSerializable(MODE, mode)
                 }
             }
     }
