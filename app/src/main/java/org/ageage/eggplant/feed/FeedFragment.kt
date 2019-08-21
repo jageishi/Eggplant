@@ -7,23 +7,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import kotlinx.android.synthetic.main.fragment_feed.*
-import org.ageage.eggplant.Category
 import org.ageage.eggplant.Mode
 import org.ageage.eggplant.R
 import timber.log.Timber
 
-private const val CATEGORY = "category"
-
 class FeedFragment : Fragment() {
-
-    private lateinit var category: Category
 
     override fun onCreate(savedInstanceState: Bundle?) {
         Timber.d("${this} : onCreate")
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            category = it.getSerializable(CATEGORY) as Category
-        }
     }
 
     override fun onCreateView(
@@ -38,10 +30,10 @@ class FeedFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         Timber.d("onViewCreated")
         super.onViewCreated(view, savedInstanceState)
-        val adapter = FeedPagerAdapter(childFragmentManager, context)
-        Mode.values().forEach { adapter.addContent(category, it) }
-        viewPager.adapter = adapter
-        tabLayout.setupWithViewPager(viewPager)
+        val adapter = FeedModePagerAdapter(childFragmentManager, context)
+        Mode.values().forEach { adapter.addContent(it) }
+        viewPagerMode.adapter = adapter
+        tabLayoutMode.setupWithViewPager(viewPagerMode)
     }
 
     override fun onDestroy() {
@@ -51,11 +43,6 @@ class FeedFragment : Fragment() {
 
     companion object {
         @JvmStatic
-        fun newInstance(category: Category) =
-            FeedFragment().also { f ->
-                f.arguments = Bundle().also { b ->
-                    b.putSerializable(CATEGORY, category)
-                }
-            }
+        fun newInstance() = FeedFragment()
     }
 }

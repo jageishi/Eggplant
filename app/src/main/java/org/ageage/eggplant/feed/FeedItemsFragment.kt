@@ -17,8 +17,8 @@ import kotlinx.android.synthetic.main.fragment_feed_items.*
 import org.ageage.eggplant.*
 import timber.log.Timber
 
-private const val CATEGORY = "category"
 private const val MODE = "mode"
+private const val CATEGORY = "category"
 
 class FeedItemsFragment : Fragment() {
 
@@ -30,8 +30,8 @@ class FeedItemsFragment : Fragment() {
         Timber.d("onCreate")
         super.onCreate(savedInstanceState)
         arguments?.let {
-            category = it.getSerializable(CATEGORY) as Category
             mode = it.getSerializable(MODE) as Mode
+            category = it.getSerializable(CATEGORY) as Category
         }
     }
 
@@ -99,11 +99,11 @@ class FeedItemsFragment : Fragment() {
 
     companion object {
         @JvmStatic
-        fun newInstance(category: Category, mode: Mode) =
+        fun newInstance(mode: Mode, category: Category) =
             FeedItemsFragment().also { f ->
                 f.arguments = Bundle().also { b ->
-                    b.putSerializable(CATEGORY, category)
                     b.putSerializable(MODE, mode)
+                    b.putSerializable(CATEGORY, category)
                 }
             }
     }

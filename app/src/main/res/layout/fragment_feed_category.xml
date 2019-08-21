@@ -4,24 +4,23 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".feed.FeedFragment">
+    tools:context=".feed.FeedCategoryFragment">
 
     <androidx.viewpager.widget.ViewPager
-        android:id="@+id/viewPagerMode"
+        android:id="@+id/viewPagerCategory"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <com.google.android.material.tabs.TabLayout
-            android:id="@+id/tabLayoutMode"
+            android:id="@+id/tabLayoutCategory"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/category_tab_background"
             android:elevation="10dp"
-            app:tabBackground="@color/colorPrimary"
-            app:tabGravity="fill"
-            app:tabIndicatorColor="@color/colorOnPrimary"
-            app:tabMaxWidth="0dp"
-            app:tabMode="fixed"
-            app:tabSelectedTextColor="@color/colorOnPrimary"
+            app:tabIndicatorColor="@color/colorPrimary"
+            app:tabMode="scrollable"
+            app:tabRippleColor="@color/colorPrimary"
+            app:tabSelectedTextColor="@color/colorPrimary"
             app:tabTextColor="@color/colorOnBackground" />
 
     </androidx.viewpager.widget.ViewPager>

@@ -1,53 +1,63 @@
 package org.ageage.eggplant
 
-import android.content.Intent
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
-import com.google.android.gms.oss.licenses.OssLicensesMenuActivity
+import androidx.fragment.app.Fragment
 import kotlinx.android.synthetic.main.activity_main.*
 import org.ageage.eggplant.feed.FeedFragment
+import org.ageage.eggplant.search.SearchFragment
+import org.ageage.eggplant.settings.SettingsFragment
 
-class MainActivity : AppCompatActivity(), BottomSheetFragment.OnNavigationItemClickListener {
+class MainActivity : AppCompatActivity() {
 
-    private var selectedCategory = Category.OVERALL
+    lateinit var feedFragment: FeedFragment
+    lateinit var searchFragment: SearchFragment
+    lateinit var settingsFragment: SettingsFragment
+    lateinit var activeFragment: Fragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        setSupportActionBar(bottomAppBar)
-        showFeedFragment()
-    }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.bottom_app_bar, menu)
-        return super.onCreateOptionsMenu(menu)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        when (item?.itemId) {
-            android.R.id.home -> {
-                val fragment = BottomSheetFragment.newInstance(selectedCategory)
-                fragment.show(supportFragmentManager, "BottomSheet")
-            }
-            R.id.license -> {
-                startActivity(Intent(this, OssLicensesMenuActivity::class.java))
+        bottomNavigation.setOnNavigationItemSelectedListener {
+            when (it.itemId) {
+                R.id.feed -> showContent(feedFragment)
+                R.id.search -> showContent(searchFragment)
+                R.id.settings -> showContent(settingsFragment)
+                else -> {
+                }
             }
 
+            true
         }
-        return super.onOptionsItemSelected(item)
+
+        initContents()
     }
 
-    override fun onClick(category: Category) {
-        selectedCategory = category
-        showFeedFragment()
-    }
+    fun initContents() {
+        feedFragment = FeedFragment.newInstance()
+        searchFragment = SearchFragment.newInstance()
+        settingsFragment = SettingsFragment.newInstance()
 
-    private fun showFeedFragment() {
         supportFragmentManager
             .beginTransaction()
-            .replace(R.id.mainContentView, FeedFragment.newInstance(selectedCategory))
+            .add(R.id.mainContentView, feedFragment)
+            .add(R.id.mainContentView, searchFragment)
+            .add(R.id.mainContentView, settingsFragment)
+            .hide(searchFragment)
+            .hide(settingsFragment)
             .commit()
+
+        activeFragment = feedFragment
+    }
+
+    fun showContent(f: Fragment) {
+        supportFragmentManager
+            .beginTransaction()
+            .hide(activeFragment)
+            .show(f)
+            .commit()
+
+        activeFragment = f
     }
 }
