@@ -18,7 +18,11 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        setupBottomNavigation()
+        initContents()
+    }
 
+    private fun setupBottomNavigation() {
         bottomNavigation.setOnNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.feed -> showContent(feedFragment)
@@ -30,28 +34,49 @@ class MainActivity : AppCompatActivity() {
 
             true
         }
-
-        initContents()
     }
 
-    fun initContents() {
-        feedFragment = FeedFragment.newInstance()
-        searchFragment = SearchFragment.newInstance()
-        settingsFragment = SettingsFragment.newInstance()
+    private fun initContents() {
 
-        supportFragmentManager
-            .beginTransaction()
-            .add(R.id.mainContentView, feedFragment)
-            .add(R.id.mainContentView, searchFragment)
-            .add(R.id.mainContentView, settingsFragment)
-            .hide(searchFragment)
-            .hide(settingsFragment)
-            .commit()
+        "feed".also { tag ->
+            feedFragment =
+                supportFragmentManager.findFragmentByTag(tag) as FeedFragment?
+                    ?: FeedFragment.newInstance().also {
+                        supportFragmentManager
+                            .beginTransaction()
+                            .add(R.id.mainContentView, it, tag)
+                            .commit()
+                    }
+        }
+
+        "search".also { tag ->
+            searchFragment =
+                supportFragmentManager.findFragmentByTag(tag) as SearchFragment?
+                    ?: SearchFragment.newInstance().also {
+                        supportFragmentManager
+                            .beginTransaction()
+                            .add(R.id.mainContentView, it, tag)
+                            .hide(it)
+                            .commit()
+                    }
+        }
+
+        "settings".also { tag ->
+            settingsFragment =
+                supportFragmentManager.findFragmentByTag(tag) as SettingsFragment?
+                    ?: SettingsFragment.newInstance().also {
+                        supportFragmentManager
+                            .beginTransaction()
+                            .add(R.id.mainContentView, it, tag)
+                            .hide(it)
+                            .commit()
+                    }
+        }
 
         activeFragment = feedFragment
     }
 
-    fun showContent(f: Fragment) {
+    private fun showContent(f: Fragment) {
         supportFragmentManager
             .beginTransaction()
             .hide(activeFragment)
