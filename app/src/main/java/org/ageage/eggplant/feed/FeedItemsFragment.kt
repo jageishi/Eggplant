@@ -51,6 +51,7 @@ class FeedItemsFragment : Fragment() {
         val dividerItemDecoration = DividerItemDecoration(context, LinearLayoutManager.VERTICAL)
         contentsList.addItemDecoration(dividerItemDecoration)
 
+        swipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary)
         swipeRefreshLayout.setOnRefreshListener {
             fetchRss()
         }
