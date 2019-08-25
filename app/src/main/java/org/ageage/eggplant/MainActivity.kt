@@ -3,6 +3,7 @@ package org.ageage.eggplant
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.transaction
 import kotlinx.android.synthetic.main.activity_main.*
 import org.ageage.eggplant.feed.FeedFragment
 import org.ageage.eggplant.search.SearchFragment
@@ -10,10 +11,10 @@ import org.ageage.eggplant.settings.SettingsFragment
 
 class MainActivity : AppCompatActivity() {
 
-    lateinit var feedFragment: FeedFragment
-    lateinit var searchFragment: SearchFragment
-    lateinit var settingsFragment: SettingsFragment
-    lateinit var activeFragment: Fragment
+    private lateinit var feedFragment: FeedFragment
+    private lateinit var searchFragment: SearchFragment
+    private lateinit var settingsFragment: SettingsFragment
+    private lateinit var activeFragment: Fragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,10 +43,9 @@ class MainActivity : AppCompatActivity() {
             feedFragment =
                 supportFragmentManager.findFragmentByTag(tag) as FeedFragment?
                     ?: FeedFragment.newInstance().also {
-                        supportFragmentManager
-                            .beginTransaction()
-                            .add(R.id.mainContentView, it, tag)
-                            .commit()
+                        supportFragmentManager.transaction {
+                            add(R.id.mainContentView, it, tag)
+                        }
                     }
         }
 
@@ -53,11 +53,10 @@ class MainActivity : AppCompatActivity() {
             searchFragment =
                 supportFragmentManager.findFragmentByTag(tag) as SearchFragment?
                     ?: SearchFragment.newInstance().also {
-                        supportFragmentManager
-                            .beginTransaction()
-                            .add(R.id.mainContentView, it, tag)
-                            .hide(it)
-                            .commit()
+                        supportFragmentManager.transaction {
+                            add(R.id.mainContentView, it, tag)
+                            hide(it)
+                        }
                     }
         }
 
@@ -65,11 +64,10 @@ class MainActivity : AppCompatActivity() {
             settingsFragment =
                 supportFragmentManager.findFragmentByTag(tag) as SettingsFragment?
                     ?: SettingsFragment.newInstance().also {
-                        supportFragmentManager
-                            .beginTransaction()
-                            .add(R.id.mainContentView, it, tag)
-                            .hide(it)
-                            .commit()
+                        supportFragmentManager.transaction {
+                            add(R.id.mainContentView, it, tag)
+                            hide(it)
+                        }
                     }
         }
 
@@ -77,11 +75,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun showContent(f: Fragment) {
-        supportFragmentManager
-            .beginTransaction()
-            .hide(activeFragment)
-            .show(f)
-            .commit()
+        supportFragmentManager.transaction {
+            hide(activeFragment)
+            show(f)
+        }
 
         activeFragment = f
     }
