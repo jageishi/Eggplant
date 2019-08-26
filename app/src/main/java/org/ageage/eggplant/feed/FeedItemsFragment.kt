@@ -15,16 +15,17 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_feed_items.*
 import org.ageage.eggplant.*
+import org.ageage.eggplant.bookmarks.BookmarksActivity
 import timber.log.Timber
 
 private const val MODE = "mode"
 private const val CATEGORY = "category"
 
-class FeedItemsFragment : Fragment() {
+class FeedItemsFragment : Fragment(), FeedItemAdapter.OnClickListener {
 
     private lateinit var category: Category
     private lateinit var mode: Mode
-    private val compositeDisposable: CompositeDisposable = CompositeDisposable()
+    private val compositeDisposable = CompositeDisposable()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         Timber.d("onCreate")
@@ -66,6 +67,14 @@ class FeedItemsFragment : Fragment() {
         compositeDisposable.clear()
     }
 
+    override fun onClickItem(item: Item) {
+        showBrowser(item.link)
+    }
+
+    override fun onClickShowBookmarks(item: Item) {
+        startActivity(BookmarksActivity.newIntent(requireContext(), item.title, item.link))
+    }
+
     private fun fetchRss() {
         Timber.d("fetchRss")
         val client = HttpClient()
@@ -76,16 +85,7 @@ class FeedItemsFragment : Fragment() {
                 .subscribe(
                     { list ->
                         contentsList?.let { contentsView ->
-                            contentsView.adapter =
-                                context?.let {
-                                    FeedItemAdapter(
-                                        it, list,
-                                        object : FeedItemAdapter.OnClickItemListener {
-                                            override fun onClickItem(item: Item) {
-                                                showBrowser(item.link)
-                                            }
-                                        })
-                                }
+                            contentsView.adapter = FeedItemAdapter(requireContext(), list, this)
                             swipeRefreshLayout.isRefreshing = false
                         }
                     }, {
