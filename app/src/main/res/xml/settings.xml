@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory android:title="@string/preference_title_about_app">
+
+        <Preference
+            android:key="ossLicenses"
+            android:title="@string/preference_title_oss_license" />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>
