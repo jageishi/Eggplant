@@ -17,4 +17,6 @@
     <string name="feed_mode_title_entry_list">新着</string>
     <string name="feed_bookmark_count">%s users</string>
     <string name="menu_item_title_license">ライセンス</string>
+    <string name="preference_title_oss_license">オープンソースライセンス</string>
+    <string name="preference_title_about_app">このアプリについて</string>
 </resources>
