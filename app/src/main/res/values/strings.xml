@@ -19,4 +19,5 @@
     <string name="menu_item_title_license">ライセンス</string>
     <string name="preference_title_oss_license">オープンソースライセンス</string>
     <string name="preference_title_about_app">このアプリについて</string>
+    <string name="preference_title_current_app_version">現在のバージョン</string>
 </resources>
