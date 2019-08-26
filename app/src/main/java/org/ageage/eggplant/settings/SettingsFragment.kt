@@ -11,15 +11,22 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        initPreferences()
+    }
+
+    override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
+        setPreferencesFromResource(R.xml.settings, rootKey)
+    }
+
+    private fun initPreferences() {
+
+        findPreference("currentAppVersion")?.summary =
+            requireContext().packageManager.getPackageInfo(requireContext().packageName, 0).versionName
 
         findPreference("ossLicenses")?.setOnPreferenceClickListener {
             startActivity(Intent(requireContext(), OssLicensesMenuActivity::class.java))
             false
         }
-    }
-
-    override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
-        setPreferencesFromResource(R.xml.settings, rootKey)
     }
 
     companion object {
