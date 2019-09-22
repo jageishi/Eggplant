@@ -32,8 +32,8 @@ class FeedFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val adapter = FeedModePagerAdapter(childFragmentManager, context)
         Mode.values().forEach { adapter.addContent(it) }
-        viewPagerMode.adapter = adapter
-        tabLayoutMode.setupWithViewPager(viewPagerMode)
+        modeViewPager.adapter = adapter
+        modeTab.setupWithViewPager(modeViewPager)
     }
 
     override fun onDestroy() {

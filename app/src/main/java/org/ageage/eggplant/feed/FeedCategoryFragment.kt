@@ -35,8 +35,8 @@ class FeedCategoryFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val adapter = FeedCategoryPagerAdapter(childFragmentManager, context)
         Category.values().forEach { adapter.addContent(mode, it) }
-        viewPagerCategory.adapter = adapter
-        tabLayoutCategory.setupWithViewPager(viewPagerCategory)
+        categoryViewPager.adapter = adapter
+        categoryTab.setupWithViewPager(categoryViewPager)
     }
 
     companion object {

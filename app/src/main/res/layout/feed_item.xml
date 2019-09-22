@@ -1,89 +1,95 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/cardView"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="?android:attr/selectableItemBackground"
-    android:clickable="true"
-    android:focusable="true">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/thumbnail"
-        android:layout_width="100dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintDimensionRatio="H,1.47:1"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
-        tools:src="@tools:sample/backgrounds/scenic" />
+    <data>
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/title"
-        android:layout_width="0dp"
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:ellipsize="end"
-        android:maxLines="4"
-        android:textColor="@color/colorOnSurface"
-        android:textSize="12sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@id/thumbnail"
-        app:layout_constraintTop_toTopOf="@id/thumbnail"
-        app:layout_constraintVertical_bias="0.0"
-        tools:text="タイトル" />
+        android:background="?android:attr/selectableItemBackground"
+        android:clickable="true"
+        android:focusable="true">
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/bookmarkCount"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
-        android:textColor="@color/colorBookmarkCount"
-        android:textSize="15sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@id/thumbnail"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="@id/thumbnail"
-        app:layout_constraintTop_toBottomOf="@id/thumbnail"
-        app:layout_constraintVertical_bias="0.0"
-        tools:text="100 users" />
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/thumbnail"
+            android:layout_width="100dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio="H,1.47:1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0"
+            tools:src="@tools:sample/backgrounds/scenic" />
 
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/favicon"
-        android:layout_width="12dp"
-        android:layout_height="12dp"
-        android:layout_marginStart="10dp"
-        android:scaleType="centerCrop"
-        app:layout_constraintBottom_toBottomOf="@id/bookmarkCount"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@id/bookmarkCount"
-        app:layout_constraintTop_toTopOf="@id/bookmarkCount"
-        tools:src="@tools:sample/backgrounds/scenic" />
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:ellipsize="end"
+            android:maxLines="4"
+            android:textColor="@color/colorOnSurface"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@id/thumbnail"
+            app:layout_constraintTop_toTopOf="@id/thumbnail"
+            app:layout_constraintVertical_bias="0.0"
+            tools:text="タイトル" />
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/linkUrl"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:ellipsize="end"
-        android:maxLines="1"
-        android:textSize="12sp"
-        app:layout_constraintBaseline_toBaselineOf="@id/bookmarkCount"
-        app:layout_constraintEnd_toEndOf="@id/title"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@id/favicon"
-        tools:text="example.cm" />
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/bookmarkCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:textColor="@color/colorBookmarkCount"
+            android:textSize="15sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/thumbnail"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="@id/thumbnail"
+            app:layout_constraintTop_toBottomOf="@id/thumbnail"
+            app:layout_constraintVertical_bias="0.0"
+            tools:text="100 users" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/favicon"
+            android:layout_width="12dp"
+            android:layout_height="12dp"
+            android:layout_marginStart="10dp"
+            android:scaleType="centerCrop"
+            app:layout_constraintBottom_toBottomOf="@id/bookmarkCount"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@id/bookmarkCount"
+            app:layout_constraintTop_toTopOf="@id/bookmarkCount"
+            tools:src="@tools:sample/backgrounds/scenic" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/linkUrl"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textSize="12sp"
+            app:layout_constraintBaseline_toBaselineOf="@id/bookmarkCount"
+            app:layout_constraintEnd_toEndOf="@id/title"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@id/favicon"
+            tools:text="example.cm" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -31,15 +31,15 @@ class BookmarksAdapter(
     override fun onBindViewHolder(holder: BookmarksHolder, position: Int) {
         val bookmark = bookmarks[position]
 
-        Glide.with(holder.binding.imageViewIcon)
+        Glide.with(holder.binding.userIcon)
             .load("http://cdn1.www.st-hatena.com/users/${bookmark.user.substring(0..1)}/${bookmark.user}/profile.gif")
             .apply(RequestOptions.bitmapTransform(RoundedCorners(40)))
-            .into(holder.binding.imageViewIcon)
+            .into(holder.binding.userIcon)
 
-        holder.binding.textViewYellowStarNumber.text =
+        holder.binding.yellowStarNumber.text =
             bookmark.entry?.stars?.size?.toString() ?: "0"
-        holder.binding.textViewUserId.text = bookmark.user
-        holder.binding.textViewComment.text = bookmark.comment
-        holder.binding.textViewTimestamp.text = bookmark.timestamp
+        holder.binding.userId.text = bookmark.user
+        holder.binding.comment.text = bookmark.comment
+        holder.binding.timeStamp.text = bookmark.timestamp
     }
 }

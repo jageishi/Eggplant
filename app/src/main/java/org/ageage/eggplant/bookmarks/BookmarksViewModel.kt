@@ -14,11 +14,11 @@ class BookmarksViewModel : ViewModel() {
 
     private val repository = BookmarkRepository()
 
-    private val _isLoading: MutableLiveData<Boolean> = MutableLiveData()
+    private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: MutableLiveData<Boolean>
         get() = _isLoading
 
-    private val _bookmarks: MutableLiveData<List<Bookmark>> = MutableLiveData()
+    private val _bookmarks = MutableLiveData<List<Bookmark>>()
     val bookmarks: LiveData<List<Bookmark>>
         get() = _bookmarks
 

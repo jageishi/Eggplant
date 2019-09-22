@@ -1,21 +1,27 @@
-package org.ageage.eggplant
+package org.ageage.eggplant.common.repository
 
 import io.reactivex.Single
 import okhttp3.Request
 import okhttp3.Response
 import org.ageage.eggplant.common.api.Client
 import org.ageage.eggplant.common.api.response.Item
+import org.ageage.eggplant.common.enums.Category
+import org.ageage.eggplant.common.enums.Mode
 import org.xmlpull.v1.XmlPullParser
 import org.xmlpull.v1.XmlPullParserFactory
 import java.io.IOException
 
-class HttpClient() {
+class FeedRepository {
 
-
-    private fun callSingle(request: Request): Single<List<Item>> {
+    fun fetchRss(mode: Mode, category: Category): Single<List<Item>> {
         return Single.create {
             try {
-                val response = Client.getInstance().newCall(request).execute()
+                val response = Client.getInstance().newCall(
+                    Request.Builder()
+                        .url("https://b.hatena.ne.jp${mode.url}${category.url}.rss")
+                        .get()
+                        .build()
+                ).execute()
                 it.onSuccess(parse(response))
             } catch (e: IOException) {
                 it.onError(e)
@@ -71,14 +77,5 @@ class HttpClient() {
         }
 
         return items
-    }
-
-    fun get(url: String): Single<List<Item>> {
-        return callSingle(
-            Request.Builder()
-                .url(url)
-                .get()
-                .build()
-        )
     }
 }

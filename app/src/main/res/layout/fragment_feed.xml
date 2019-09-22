@@ -7,12 +7,12 @@
     tools:context=".feed.FeedFragment">
 
     <androidx.viewpager.widget.ViewPager
-        android:id="@+id/viewPagerMode"
+        android:id="@+id/modeViewPager"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <com.google.android.material.tabs.TabLayout
-            android:id="@+id/tabLayoutMode"
+            android:id="@+id/modeTab"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:elevation="10dp"

@@ -7,32 +7,31 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_feed_items.*
-import org.ageage.eggplant.HttpClient
 import org.ageage.eggplant.R
 import org.ageage.eggplant.bookmarks.BookmarksActivity
 import org.ageage.eggplant.common.api.response.Item
 import org.ageage.eggplant.common.enums.Category
 import org.ageage.eggplant.common.enums.Mode
-import timber.log.Timber
+import org.ageage.eggplant.databinding.FragmentFeedItemsBinding
 
 private const val MODE = "mode"
 private const val CATEGORY = "category"
 
 class FeedItemsFragment : Fragment(), FeedItemAdapter.OnClickListener {
 
+    private val viewModel: FeedItemsViewModel by viewModels()
+    private lateinit var binding: FragmentFeedItemsBinding
     private lateinit var category: Category
     private lateinit var mode: Mode
-    private val compositeDisposable = CompositeDisposable()
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        Timber.d("onCreate")
         super.onCreate(savedInstanceState)
         arguments?.let {
             mode = it.getSerializable(MODE) as Mode
@@ -44,31 +43,23 @@ class FeedItemsFragment : Fragment(), FeedItemAdapter.OnClickListener {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        Timber.d("onCreateView")
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_feed_items, container, false)
+        binding = DataBindingUtil.inflate(
+            LayoutInflater.from(requireContext()),
+            R.layout.fragment_feed_items,
+            container,
+            false
+        )
+        binding.lifecycleOwner = viewLifecycleOwner
+        binding.viewModel = viewModel
+        return binding.root
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        Timber.d("onActivityCreated")
-        super.onActivityCreated(savedInstanceState)
-
-        val dividerItemDecoration = DividerItemDecoration(context, LinearLayoutManager.VERTICAL)
-        contentsList.addItemDecoration(dividerItemDecoration)
-
-        swipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary)
-        swipeRefreshLayout.setOnRefreshListener {
-            fetchRss()
-        }
-
-        swipeRefreshLayout.isRefreshing = true
-        fetchRss()
-    }
-
-    override fun onPause() {
-        Timber.d("onPause")
-        super.onPause()
-        compositeDisposable.clear()
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        initViewModel()
+        initViews()
+        viewModel.loadRss(mode, category)
     }
 
     override fun onClickItem(item: Item) {
@@ -79,23 +70,18 @@ class FeedItemsFragment : Fragment(), FeedItemAdapter.OnClickListener {
         startActivity(BookmarksActivity.newIntent(requireContext(), item.title, item.link))
     }
 
-    private fun fetchRss() {
-        Timber.d("fetchRss")
-        val client = HttpClient()
-        compositeDisposable.add(
-            client.get("https://b.hatena.ne.jp${mode.url}${category.url}.rss")
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                    { list ->
-                        contentsList?.let { contentsView ->
-                            contentsView.adapter = FeedItemAdapter(requireContext(), list, this)
-                            swipeRefreshLayout.isRefreshing = false
-                        }
-                    }, {
-                        swipeRefreshLayout.isRefreshing = false
-                    }
-                ))
+    private fun initViewModel() {
+        viewModel.items.observe(viewLifecycleOwner, Observer { itemList ->
+            contentsList.adapter = FeedItemAdapter(requireContext(), itemList, this)
+        })
+    }
+
+    private fun initViews() {
+        contentsList.addItemDecoration(DividerItemDecoration(context, LinearLayoutManager.VERTICAL))
+        swipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary)
+        swipeRefreshLayout.setOnRefreshListener {
+            viewModel.loadRss(mode, category, true)
+        }
     }
 
     private fun showBrowser(uri: String) {

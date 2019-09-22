@@ -13,7 +13,7 @@
 
 
         <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/imageViewYellowStar"
+            android:id="@+id/yellowStar"
             android:layout_width="15dp"
             android:layout_height="15dp"
             android:layout_marginStart="10dp"
@@ -22,12 +22,12 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toEndOf="@id/textViewUserId"
+            app:layout_constraintStart_toEndOf="@id/userId"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0" />
 
         <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/imageViewIcon"
+            android:id="@+id/userIcon"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_marginStart="10dp"
@@ -38,25 +38,25 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/textViewUserId"
+            app:layout_constraintTop_toBottomOf="@id/userId"
             app:layout_constraintVertical_bias="0.0"
             tools:src="@tools:sample/backgrounds/scenic" />
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/textViewYellowStarNumber"
+            android:id="@+id/yellowStarNumber"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toEndOf="@id/imageViewYellowStar"
-            app:layout_constraintTop_toTopOf="@id/imageViewYellowStar"
+            app:layout_constraintStart_toEndOf="@id/yellowStar"
+            app:layout_constraintTop_toTopOf="@id/yellowStar"
             app:layout_constraintVertical_bias="0.0"
             tools:text="10" />
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/textViewUserId"
+            android:id="@+id/userId"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
@@ -72,7 +72,7 @@
             tools:text="xxxxxxx" />
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/textViewComment"
+            android:id="@+id/comment"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
@@ -82,13 +82,13 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toEndOf="@id/imageViewIcon"
-            app:layout_constraintTop_toTopOf="@id/imageViewIcon"
+            app:layout_constraintStart_toEndOf="@id/userIcon"
+            app:layout_constraintTop_toTopOf="@id/userIcon"
             app:layout_constraintVertical_bias="0.0"
             tools:text="コメント" />
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/textViewTimestamp"
+            android:id="@+id/timeStamp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
@@ -99,7 +99,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/textViewComment"
+            app:layout_constraintTop_toBottomOf="@id/comment"
             app:layout_constraintVertical_bias="1.0"
             tools:text="0000/00/00" />
 
