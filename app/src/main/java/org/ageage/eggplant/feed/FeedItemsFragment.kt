@@ -26,7 +26,7 @@ private const val CATEGORY = "category"
 
 class FeedItemsFragment : Fragment(), FeedItemAdapter.OnClickListener {
 
-    private val viewModel: FeedItemsViewModel by viewModels()
+    private val viewModel: FeedItemsViewModel by viewModels { FeedItemsViewModelFactory() }
     private lateinit var binding: FragmentFeedItemsBinding
     private lateinit var category: Category
     private lateinit var mode: Mode

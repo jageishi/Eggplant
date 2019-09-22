@@ -10,9 +10,9 @@ import org.ageage.eggplant.common.api.response.Bookmark
 import org.ageage.eggplant.common.enums.SortType
 import org.ageage.eggplant.common.repository.BookmarkRepository
 
-class BookmarksViewModel : ViewModel() {
-
-    private val repository = BookmarkRepository()
+class BookmarksViewModel(
+    private val repository: BookmarkRepository
+) : ViewModel() {
 
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: MutableLiveData<Boolean>

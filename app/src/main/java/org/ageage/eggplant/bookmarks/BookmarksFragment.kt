@@ -20,7 +20,7 @@ private const val URL = "url"
 
 class BookmarksFragment : Fragment() {
 
-    private val viewModel: BookmarksViewModel by viewModels()
+    private val viewModel: BookmarksViewModel by viewModels { BookmarksViewModelFactory() }
     private lateinit var binding: FragmentBookmarksBinding
     private lateinit var sortType: SortType
     private lateinit var url: String

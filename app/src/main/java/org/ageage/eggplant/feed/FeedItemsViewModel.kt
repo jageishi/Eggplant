@@ -11,9 +11,9 @@ import org.ageage.eggplant.common.enums.Category
 import org.ageage.eggplant.common.enums.Mode
 import org.ageage.eggplant.common.repository.FeedRepository
 
-class FeedItemsViewModel : ViewModel() {
-
-    private val repository = FeedRepository()
+class FeedItemsViewModel(
+    private val repository: FeedRepository
+) : ViewModel() {
 
     private val _items = MutableLiveData<List<Item>>()
     val items: LiveData<List<Item>>
