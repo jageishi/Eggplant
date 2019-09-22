@@ -1,7 +1,8 @@
-package org.ageage.eggplant
+package org.ageage.eggplant.common.api
 
 import io.reactivex.Observable
 import org.ageage.eggplant.bookmarks.BookmarkStarResponse
+import org.ageage.eggplant.common.api.response.BookmarkEntry
 import retrofit2.http.GET
 import retrofit2.http.Query
 

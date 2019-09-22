@@ -1,21 +1,21 @@
 package org.ageage.eggplant
 
 import io.reactivex.Single
-import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.Response
+import org.ageage.eggplant.common.api.Client
+import org.ageage.eggplant.common.api.response.Item
 import org.xmlpull.v1.XmlPullParser
 import org.xmlpull.v1.XmlPullParserFactory
 import java.io.IOException
 
 class HttpClient() {
 
-    val client = OkHttpClient()
 
     private fun callSingle(request: Request): Single<List<Item>> {
         return Single.create {
             try {
-                val response = client.newCall(request).execute()
+                val response = Client.getInstance().newCall(request).execute()
                 it.onSuccess(parse(response))
             } catch (e: IOException) {
                 it.onError(e)

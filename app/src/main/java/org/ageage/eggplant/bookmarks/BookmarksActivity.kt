@@ -7,7 +7,7 @@ import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_bookmarks.*
 import org.ageage.eggplant.R
-import org.ageage.eggplant.SortType
+import org.ageage.eggplant.common.enums.SortType
 
 private const val TITLE = "title"
 private const val URL = "url"

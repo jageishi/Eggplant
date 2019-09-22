@@ -6,9 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import kotlinx.android.synthetic.main.fragment_feed_category.*
-import org.ageage.eggplant.Category
-import org.ageage.eggplant.Mode
 import org.ageage.eggplant.R
+import org.ageage.eggplant.common.enums.Category
+import org.ageage.eggplant.common.enums.Mode
 
 private const val MODE = "mode"
 

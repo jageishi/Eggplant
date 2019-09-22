@@ -14,8 +14,12 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_feed_items.*
-import org.ageage.eggplant.*
+import org.ageage.eggplant.HttpClient
+import org.ageage.eggplant.R
 import org.ageage.eggplant.bookmarks.BookmarksActivity
+import org.ageage.eggplant.common.api.response.Item
+import org.ageage.eggplant.common.enums.Category
+import org.ageage.eggplant.common.enums.Mode
 import timber.log.Timber
 
 private const val MODE = "mode"

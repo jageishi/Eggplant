@@ -6,8 +6,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import okhttp3.internal.format
-import org.ageage.eggplant.Item
 import org.ageage.eggplant.R
+import org.ageage.eggplant.common.api.response.Item
 
 class FeedItemAdapter(
     private val context: Context,

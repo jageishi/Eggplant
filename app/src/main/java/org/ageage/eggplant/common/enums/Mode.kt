@@ -1,6 +1,7 @@
-package org.ageage.eggplant
+package org.ageage.eggplant.common.enums
 
 import androidx.annotation.StringRes
+import org.ageage.eggplant.R
 
 enum class Mode(
     val url: String,

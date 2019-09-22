@@ -1,39 +1,29 @@
 package org.ageage.eggplant.bookmarks
 
 import android.os.Bundle
-import android.text.format.DateFormat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.rxkotlin.toObservable
-import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_bookmarks.*
-import okhttp3.OkHttpClient
-import org.ageage.eggplant.BookmarkService
 import org.ageage.eggplant.R
-import org.ageage.eggplant.SortType
-import retrofit2.Retrofit
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
-import retrofit2.converter.gson.GsonConverterFactory
-import timber.log.Timber
-import java.text.SimpleDateFormat
-import java.util.*
+import org.ageage.eggplant.common.enums.SortType
+import org.ageage.eggplant.databinding.FragmentBookmarksBinding
 
 private const val SORT_TYPE = "sort_type"
 private const val URL = "url"
 
 class BookmarksFragment : Fragment() {
 
-    private lateinit var client: OkHttpClient
+    private val viewModel: BookmarksViewModel by viewModels()
+    private lateinit var binding: FragmentBookmarksBinding
     private lateinit var sortType: SortType
     private lateinit var url: String
-
-    private val compositeDisposable = CompositeDisposable()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,7 +31,6 @@ class BookmarksFragment : Fragment() {
             sortType = it.getSerializable(SORT_TYPE) as SortType
             url = it.getString(URL) ?: ""
         }
-        client = OkHttpClient.Builder().build()
     }
 
     override fun onCreateView(
@@ -49,109 +38,42 @@ class BookmarksFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_bookmarks, container, false)
+        binding = DataBindingUtil.inflate(
+            LayoutInflater.from(requireContext()),
+            R.layout.fragment_bookmarks,
+            container,
+            false
+        )
+        binding.lifecycleOwner = viewLifecycleOwner
+        binding.viewModel = viewModel
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initViewModel()
+        initViews()
+        viewModel.loadBookmarks(url, sortType)
+    }
 
-        val dividerItemDecoration = DividerItemDecoration(context, LinearLayoutManager.VERTICAL)
-        bookmarkList.addItemDecoration(dividerItemDecoration)
+    private fun initViewModel() {
+        viewModel.bookmarks.observe(viewLifecycleOwner, Observer { bookmarks ->
+            bookmarkList.adapter = BookmarksAdapter(bookmarks)
+        })
+    }
+
+    private fun initViews() {
+        bookmarkList.addItemDecoration(
+            DividerItemDecoration(
+                context,
+                LinearLayoutManager.VERTICAL
+            )
+        )
 
         swipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary)
         swipeRefreshLayout.setOnRefreshListener {
-            loadBookmarks()
+            viewModel.loadBookmarks(url, sortType, true)
         }
-
-        loadBookmarks()
-    }
-
-    override fun onPause() {
-        super.onPause()
-        compositeDisposable.clear()
-    }
-
-    private fun loadBookmarks() {
-        val service =
-            Retrofit.Builder()
-                .addConverterFactory(GsonConverterFactory.create())
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .client(client)
-                .baseUrl("http://b.hatena.ne.jp")
-                .build()
-                .create(BookmarkService::class.java)
-
-        swipeRefreshLayout.isRefreshing = true
-
-        compositeDisposable.add(
-            service.bookmarkEntry(url)
-                .flatMap { bookmarkEntry ->
-                    bookmarkEntry.bookmarks.toObservable()
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(Schedulers.io())
-                        .filter {
-                            it.comment.isNotEmpty()
-                        }
-                        .concatMapEager { bookmark ->
-                            val timestamp =
-                                DateFormat.format(
-                                    "yyyyMMdd",
-                                    SimpleDateFormat(
-                                        "yyyy/MM/dd HH:mm",
-                                        Locale.US
-                                    ).parse(bookmark.timestamp)
-                                )
-                            Retrofit.Builder()
-                                .addConverterFactory(GsonConverterFactory.create())
-                                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                                .client(client)
-                                .baseUrl("https://s.hatena.com/")
-                                .build()
-                                .create(BookmarkService::class.java)
-                                .startCount("https://b.hatena.ne.jp/${bookmark.user}/${timestamp}#bookmark-${bookmarkEntry.eid}")
-                                .subscribeOn(Schedulers.io())
-                                .observeOn(AndroidSchedulers.mainThread())
-                        }
-                        .toList()
-                        .map { responses ->
-                            Timber.d(responses.toString())
-                            bookmarkEntry.bookmarks
-                                .filter {
-                                    it.comment.isNotEmpty()
-                                }
-                                .forEachIndexed { index, bookmark ->
-                                    bookmark.entry = responses[index].entries.elementAtOrNull(0)
-                                }
-                            bookmarkEntry
-                        }
-                        .toObservable()
-                }
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({
-                    val sortedBookmarks = when (sortType) {
-                        SortType.POPULAR -> {
-                            it.bookmarks
-                                .sortedByDescending { bookmark -> bookmark.entry?.stars?.size ?: 0 }
-                                .take(10)
-                        }
-                        SortType.RECENT -> {
-                            it.bookmarks
-                                .filter { bookmark -> bookmark.comment.isNotEmpty() }
-                                .sortedBy { bookmark -> bookmark.entry?.stars?.size ?: 0 }
-                        }
-
-                    }
-
-                    bookmarkList?.let {
-                        it.adapter = BookmarksAdapter(sortedBookmarks)
-                    }
-                    swipeRefreshLayout.isRefreshing = false
-                }, {
-                    Timber.d(it.toString())
-                    swipeRefreshLayout.isRefreshing = false
-                })
-        )
     }
 
     companion object {

@@ -3,6 +3,7 @@ package org.ageage.eggplant.settings
 
 import android.content.Intent
 import android.os.Bundle
+import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import com.google.android.gms.oss.licenses.OssLicensesMenuActivity
 import org.ageage.eggplant.R
@@ -19,11 +20,13 @@ class SettingsFragment : PreferenceFragmentCompat() {
     }
 
     private fun initPreferences() {
+        findPreference<Preference>("currentAppVersion")?.summary =
+            requireContext()
+                .packageManager
+                .getPackageInfo(requireContext().packageName, 0)
+                .versionName
 
-        findPreference("currentAppVersion")?.summary =
-            requireContext().packageManager.getPackageInfo(requireContext().packageName, 0).versionName
-
-        findPreference("ossLicenses")?.setOnPreferenceClickListener {
+        findPreference<Preference>("ossLicenses")?.setOnPreferenceClickListener {
             startActivity(Intent(requireContext(), OssLicensesMenuActivity::class.java))
             false
         }

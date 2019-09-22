@@ -7,8 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import kotlinx.android.synthetic.main.fragment_feed.*
-import org.ageage.eggplant.Mode
 import org.ageage.eggplant.R
+import org.ageage.eggplant.common.enums.Mode
 import timber.log.Timber
 
 class FeedFragment : Fragment() {

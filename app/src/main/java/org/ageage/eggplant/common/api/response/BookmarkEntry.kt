@@ -1,4 +1,4 @@
-package org.ageage.eggplant
+package org.ageage.eggplant.common.api.response
 
 data class BookmarkEntry(
     val title: String,
