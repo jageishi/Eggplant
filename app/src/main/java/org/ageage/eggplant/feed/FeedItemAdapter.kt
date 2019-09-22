@@ -12,11 +12,12 @@ import org.ageage.eggplant.R
 class FeedItemAdapter(
     private val context: Context,
     private val itemList: List<Item>,
-    private val listener: OnClickItemListener
+    private val listener: OnClickListener
 ) : RecyclerView.Adapter<FeedItemHolder>() {
 
-    interface OnClickItemListener {
+    interface OnClickListener {
         fun onClickItem(item: Item)
+        fun onClickShowBookmarks(item: Item)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FeedItemHolder {
@@ -24,8 +25,16 @@ class FeedItemAdapter(
         val holder = FeedItemHolder(view)
 
         holder.itemView.setOnClickListener {
-            val position = holder.adapterPosition
-            listener.onClickItem(itemList[position])
+            listener.onClickItem(itemList[holder.adapterPosition])
+        }
+
+        holder.itemView.setOnCreateContextMenuListener { contextMenu, _, _ ->
+            contextMenu
+                .add(context.getString(R.string.context_menu_title_show_bookmarks))
+                .setOnMenuItemClickListener {
+                    listener.onClickShowBookmarks(itemList[holder.adapterPosition])
+                    false
+                }
         }
 
         return holder
