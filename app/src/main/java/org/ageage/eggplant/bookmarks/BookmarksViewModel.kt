@@ -9,6 +9,8 @@ import io.reactivex.schedulers.Schedulers
 import org.ageage.eggplant.common.api.response.Bookmark
 import org.ageage.eggplant.common.enums.SortType
 import org.ageage.eggplant.common.repository.BookmarkRepository
+import java.text.SimpleDateFormat
+import java.util.*
 
 class BookmarksViewModel(
     private val repository: BookmarkRepository
@@ -39,13 +41,19 @@ class BookmarksViewModel(
                 val sortedBookmarks = when (sortType) {
                     SortType.POPULAR -> {
                         bookmarkList
+                            .filter { bookmark -> bookmark.comment.isNotEmpty() }
                             .sortedByDescending { bookmark -> bookmark.entry?.stars?.size ?: 0 }
                             .take(10)
                     }
                     SortType.RECENT -> {
                         bookmarkList
                             .filter { bookmark -> bookmark.comment.isNotEmpty() }
-                            .sortedBy { bookmark -> bookmark.entry?.stars?.size ?: 0 }
+                            .sortedByDescending { bookmark ->
+                                SimpleDateFormat(
+                                    "yyyy/MM/dd HH:mm",
+                                    Locale.US
+                                ).parse(bookmark.timestamp)
+                            }
                     }
                 }
 

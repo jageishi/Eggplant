@@ -8,9 +8,7 @@ import io.reactivex.schedulers.Schedulers
 import org.ageage.eggplant.common.api.BookmarkService
 import org.ageage.eggplant.common.api.Client
 import org.ageage.eggplant.common.api.response.Bookmark
-import retrofit2.Retrofit
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
-import retrofit2.converter.gson.GsonConverterFactory
+import org.ageage.eggplant.common.enums.Endpoint
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -18,7 +16,7 @@ class BookmarkRepository {
 
     fun fetchBookmarks(url: String): Observable<List<Bookmark>> {
         val service =
-            Client.retrofitClient("http://b.hatena.ne.jp")
+            Client.retrofitClient(Endpoint.HATENA_BOOKMARK)
                 .create(BookmarkService::class.java)
 
         return service.bookmarkEntry(url)
@@ -38,14 +36,9 @@ class BookmarkRepository {
                                     Locale.US
                                 ).parse(bookmark.timestamp)
                             )
-                        Retrofit.Builder()
-                            .addConverterFactory(GsonConverterFactory.create())
-                            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                            .client(Client.getInstance())
-                            .baseUrl("https://s.hatena.com/")
-                            .build()
+                        Client.retrofitClient(Endpoint.HATENA_STAR)
                             .create(BookmarkService::class.java)
-                            .startCount("https://b.hatena.ne.jp/${bookmark.user}/${timestamp}#bookmark-${bookmarkEntry.eid}")
+                            .startCount("${Endpoint.HATENA_BOOKMARK.url}/${bookmark.user}/${timestamp}#bookmark-${bookmarkEntry.eid}")
                             .subscribeOn(Schedulers.io())
                             .observeOn(AndroidSchedulers.mainThread())
                     }
