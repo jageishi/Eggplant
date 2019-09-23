@@ -7,6 +7,6 @@ enum class Endpoint(
         "https://b.hatena.ne.jp"
     ),
     HATENA_STAR(
-        "https://s.hatena.com/"
+        "https://s.hatena.com"
     )
 }
