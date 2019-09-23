@@ -3,6 +3,7 @@ package org.ageage.eggplant.bookmarks
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import org.ageage.eggplant.common.repository.BookmarkRepository
+import org.ageage.eggplant.common.schedulerprovider.SchedulerProvider
 
 class BookmarksViewModelFactory : ViewModelProvider.Factory {
 
@@ -12,6 +13,9 @@ class BookmarksViewModelFactory : ViewModelProvider.Factory {
             throw IllegalArgumentException("Illegal ViewModel class.")
         }
 
-        return BookmarksViewModel(BookmarkRepository()) as T
+        return BookmarksViewModel(
+            BookmarkRepository(),
+            SchedulerProvider()
+        ) as T
     }
 }

@@ -4,16 +4,16 @@ import android.annotation.SuppressLint
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
 import org.ageage.eggplant.common.api.response.Bookmark
 import org.ageage.eggplant.common.enums.SortType
 import org.ageage.eggplant.common.repository.BookmarkRepository
+import org.ageage.eggplant.common.schedulerprovider.BaseSchedulerProvider
 import java.text.SimpleDateFormat
 import java.util.*
 
 class BookmarksViewModel(
-    private val repository: BookmarkRepository
+    private val repository: BookmarkRepository,
+    private val schedulerProvider: BaseSchedulerProvider
 ) : ViewModel() {
 
     private val _isLoading = MutableLiveData<Boolean>()
@@ -35,8 +35,8 @@ class BookmarksViewModel(
         _isLoading.value = true
         repository
             .fetchBookmarks(url)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(schedulerProvider.io())
+            .observeOn(schedulerProvider.ui())
             .subscribe({ bookmarkList ->
                 val sortedBookmarks = when (sortType) {
                     SortType.POPULAR -> {

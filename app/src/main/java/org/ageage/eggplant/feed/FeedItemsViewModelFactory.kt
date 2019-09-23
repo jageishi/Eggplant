@@ -3,6 +3,7 @@ package org.ageage.eggplant.feed
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import org.ageage.eggplant.common.repository.FeedRepository
+import org.ageage.eggplant.common.schedulerprovider.SchedulerProvider
 
 class FeedItemsViewModelFactory : ViewModelProvider.Factory {
 
@@ -12,6 +13,9 @@ class FeedItemsViewModelFactory : ViewModelProvider.Factory {
             throw IllegalArgumentException("Illegal ViewModel class.")
         }
 
-        return FeedItemsViewModel(FeedRepository()) as T
+        return FeedItemsViewModel(
+            FeedRepository(),
+            SchedulerProvider()
+        ) as T
     }
 }

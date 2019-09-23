@@ -4,15 +4,15 @@ import android.annotation.SuppressLint
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
 import org.ageage.eggplant.common.api.response.Item
 import org.ageage.eggplant.common.enums.Category
 import org.ageage.eggplant.common.enums.Mode
 import org.ageage.eggplant.common.repository.FeedRepository
+import org.ageage.eggplant.common.schedulerprovider.BaseSchedulerProvider
 
 class FeedItemsViewModel(
-    private val repository: FeedRepository
+    private val repository: FeedRepository,
+    private val schedulerProvider: BaseSchedulerProvider
 ) : ViewModel() {
 
     private val _items = MutableLiveData<List<Item>>()
@@ -31,18 +31,18 @@ class FeedItemsViewModel(
             return
         }
 
-        _isLoading.value = true
+        _isLoading.postValue(true)
         repository
             .fetchRss(mode, category)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(schedulerProvider.io())
+            .observeOn(schedulerProvider.ui())
             .subscribe(
                 { itemList ->
-                    _items.value = itemList
-                    _isLoading.value = false
+                    _items.postValue(itemList)
+                    _isLoading.postValue(false)
                     isAlreadyLoaded = true
                 }, {
-                    _isLoading.value = false
+                    _isLoading.postValue(false)
                 }
             )
     }
