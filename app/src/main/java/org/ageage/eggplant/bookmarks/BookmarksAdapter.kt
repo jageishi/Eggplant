@@ -10,6 +10,8 @@ import com.bumptech.glide.request.RequestOptions
 import org.ageage.eggplant.R
 import org.ageage.eggplant.common.model.Bookmark
 import org.ageage.eggplant.databinding.BookmarkItemBinding
+import java.text.SimpleDateFormat
+import java.util.*
 
 class BookmarksAdapter(
     private val bookmarks: List<Bookmark>
@@ -40,6 +42,8 @@ class BookmarksAdapter(
             bookmark.yellowStarNumber.toString()
         holder.binding.userId.text = bookmark.user
         holder.binding.comment.text = bookmark.comment
-        holder.binding.timeStamp.text = bookmark.timeStamp.toString()
+        holder.binding.timeStamp.text =
+            SimpleDateFormat("yyyy/MM/dd HH:mm", Locale.US)
+                .format(bookmark.timeStamp)
     }
 }
