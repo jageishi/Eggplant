@@ -14,7 +14,6 @@ import org.junit.Rule
 import org.junit.Test
 import org.mockito.Mock
 import org.mockito.MockitoAnnotations
-import java.io.IOException
 
 class FeedItemsViewModelTest {
 
@@ -22,10 +21,10 @@ class FeedItemsViewModelTest {
     var instantTaskExecutorRule = InstantTaskExecutorRule()
 
     @Mock
-    lateinit var itemObserver: Observer<List<Item>>
+    private lateinit var itemObserver: Observer<List<Item>>
 
     @Mock
-    lateinit var loadingObserver: Observer<Boolean>
+    private lateinit var loadingObserver: Observer<Boolean>
 
     private val mode = Mode.ENTRY_LIST
     private val category = Category.OVERALL
@@ -58,18 +57,20 @@ class FeedItemsViewModelTest {
     @Test
     fun loadRss_onError() {
         val mockRepository = mock<FeedRepository> {
-            on { fetchRss(mode, category) } doReturn Single.error(IOException())
+            on { fetchRss(mode, category) } doReturn Single.error(Throwable())
         }
 
         val viewModel = FeedItemsViewModel(mockRepository, TrampolineSchedulerProvider())
 
-        val orderedVerifier = inOrder(loadingObserver)
+        val orderedVerifier = inOrder(itemObserver, loadingObserver)
 
+        viewModel.items.observeForever(itemObserver)
         viewModel.isLoading.observeForever(loadingObserver)
 
         viewModel.loadRss(mode, category)
 
         orderedVerifier.verify(loadingObserver, times(1)).onChanged(true)
+        orderedVerifier.verify(itemObserver, never()).onChanged(fakeItems)
         orderedVerifier.verify(loadingObserver, times(1)).onChanged(false)
     }
 

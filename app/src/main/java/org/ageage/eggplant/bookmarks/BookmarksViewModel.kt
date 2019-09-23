@@ -4,12 +4,10 @@ import android.annotation.SuppressLint
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import org.ageage.eggplant.common.api.response.Bookmark
 import org.ageage.eggplant.common.enums.SortType
+import org.ageage.eggplant.common.model.Bookmark
 import org.ageage.eggplant.common.repository.BookmarkRepository
 import org.ageage.eggplant.common.schedulerprovider.BaseSchedulerProvider
-import java.text.SimpleDateFormat
-import java.util.*
 
 class BookmarksViewModel(
     private val repository: BookmarkRepository,
@@ -42,18 +40,13 @@ class BookmarksViewModel(
                     SortType.POPULAR -> {
                         bookmarkList
                             .filter { bookmark -> bookmark.comment.isNotEmpty() }
-                            .sortedByDescending { bookmark -> bookmark.entry?.stars?.size ?: 0 }
+                            .sortedByDescending { bookmark -> bookmark.yellowStarNumber }
                             .take(10)
                     }
                     SortType.RECENT -> {
                         bookmarkList
                             .filter { bookmark -> bookmark.comment.isNotEmpty() }
-                            .sortedByDescending { bookmark ->
-                                SimpleDateFormat(
-                                    "yyyy/MM/dd HH:mm",
-                                    Locale.US
-                                ).parse(bookmark.timestamp)
-                            }
+                            .sortedByDescending { bookmark -> bookmark.timeStamp }
                     }
                 }
 

@@ -7,8 +7,9 @@ import io.reactivex.rxkotlin.toObservable
 import io.reactivex.schedulers.Schedulers
 import org.ageage.eggplant.common.api.BookmarkService
 import org.ageage.eggplant.common.api.Client
-import org.ageage.eggplant.common.api.response.Bookmark
+import org.ageage.eggplant.common.api.response.mapper.toBookmarks
 import org.ageage.eggplant.common.enums.Endpoint
+import org.ageage.eggplant.common.model.Bookmark
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -21,7 +22,7 @@ class BookmarkRepository {
 
         return service.bookmarkEntry(url)
             .flatMap { bookmarkEntry ->
-                bookmarkEntry.bookmarks.toObservable()
+                bookmarkEntry.bookmarkResponses.toObservable()
                     .subscribeOn(Schedulers.io())
                     .observeOn(Schedulers.io())
                     .filter {
@@ -44,14 +45,14 @@ class BookmarkRepository {
                     }
                     .toList()
                     .map { responses ->
-                        bookmarkEntry.bookmarks
+                        bookmarkEntry.bookmarkResponses
                             .filter {
                                 it.comment.isNotEmpty()
                             }
-                            .forEachIndexed { index, bookmark ->
-                                bookmark.entry = responses[index].entries.elementAtOrNull(0)
+                            .forEachIndexed { index, bookmarkResponse ->
+                                bookmarkResponse.entry = responses[index].entries.elementAtOrNull(0)
                             }
-                        bookmarkEntry.bookmarks
+                        bookmarkEntry.bookmarkResponses.toBookmarks()
                     }
                     .toObservable()
             }

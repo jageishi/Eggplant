@@ -8,7 +8,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import org.ageage.eggplant.R
-import org.ageage.eggplant.common.api.response.Bookmark
+import org.ageage.eggplant.common.model.Bookmark
 import org.ageage.eggplant.databinding.BookmarkItemBinding
 
 class BookmarksAdapter(
@@ -37,9 +37,9 @@ class BookmarksAdapter(
             .into(holder.binding.userIcon)
 
         holder.binding.yellowStarNumber.text =
-            bookmark.entry?.stars?.size?.toString() ?: "0"
+            bookmark.yellowStarNumber.toString()
         holder.binding.userId.text = bookmark.user
         holder.binding.comment.text = bookmark.comment
-        holder.binding.timeStamp.text = bookmark.timestamp
+        holder.binding.timeStamp.text = bookmark.timeStamp.toString()
     }
 }
