@@ -3,7 +3,7 @@ package org.ageage.eggplant
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.transaction
+import androidx.fragment.app.commit
 import kotlinx.android.synthetic.main.activity_main.*
 import org.ageage.eggplant.feed.FeedFragment
 import org.ageage.eggplant.search.SearchFragment
@@ -43,7 +43,7 @@ class MainActivity : AppCompatActivity() {
             feedFragment =
                 supportFragmentManager.findFragmentByTag(tag) as FeedFragment?
                     ?: FeedFragment.newInstance().also {
-                        supportFragmentManager.transaction {
+                        supportFragmentManager.commit {
                             add(R.id.mainContentView, it, tag)
                         }
                     }
@@ -53,7 +53,7 @@ class MainActivity : AppCompatActivity() {
             searchFragment =
                 supportFragmentManager.findFragmentByTag(tag) as SearchFragment?
                     ?: SearchFragment.newInstance().also {
-                        supportFragmentManager.transaction {
+                        supportFragmentManager.commit {
                             add(R.id.mainContentView, it, tag)
                             hide(it)
                         }
@@ -64,7 +64,7 @@ class MainActivity : AppCompatActivity() {
             settingsFragment =
                 supportFragmentManager.findFragmentByTag(tag) as SettingsFragment?
                     ?: SettingsFragment.newInstance().also {
-                        supportFragmentManager.transaction {
+                        supportFragmentManager.commit {
                             add(R.id.mainContentView, it, tag)
                             hide(it)
                         }
@@ -75,7 +75,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun showContent(f: Fragment) {
-        supportFragmentManager.transaction {
+        supportFragmentManager.commit {
             hide(activeFragment)
             show(f)
         }

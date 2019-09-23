@@ -1,8 +1,8 @@
-package org.ageage.eggplant
+package org.ageage.eggplant.common.api.response
 
-data class Bookmark(
+data class BookmarkResponse(
     val user: String,
-    val tags: Array<String>,
+    val tags: List<String>,
     val timestamp: String,
     val comment: String,
     var entry: BookmarkStarEntry? = null

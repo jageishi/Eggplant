@@ -3,12 +3,12 @@ package org.ageage.eggplant.feed
 import android.content.Context
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
-import org.ageage.eggplant.Mode
+import org.ageage.eggplant.common.enums.Mode
 
 class FeedModePagerAdapter(
-    fm: FragmentManager?,
+    fm: FragmentManager,
     private val context: Context?
-) : FragmentPagerAdapter(fm) {
+) : FragmentPagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 
     private val contents = ArrayList<FeedCategoryFragment>()
     private val pageTitles = ArrayList<String>()

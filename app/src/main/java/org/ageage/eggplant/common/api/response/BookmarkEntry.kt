@@ -1,4 +1,4 @@
-package org.ageage.eggplant
+package org.ageage.eggplant.common.api.response
 
 data class BookmarkEntry(
     val title: String,
@@ -6,5 +6,5 @@ data class BookmarkEntry(
     val entryUrl: String,
     val screenshot: String,
     val eid: String,
-    val bookmarks: List<Bookmark>
+    val bookmarkResponses: List<BookmarkResponse>
 )
