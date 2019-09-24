@@ -1,7 +1,6 @@
-package org.ageage.eggplant.bookmarks
+package org.ageage.eggplant.common.api.response
 
 import com.google.gson.annotations.SerializedName
-import org.ageage.eggplant.common.api.response.BookmarkStarEntry
 
 data class BookmarkStarResponse(
     val entries: List<BookmarkStarEntry>,
