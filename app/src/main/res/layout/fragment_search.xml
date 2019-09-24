@@ -1,13 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".search.SearchFragment">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="search" />
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:hint="検索"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
 
-</FrameLayout>
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <RadioGroup
+        android:id="@+id/bookmarkNumberRadioGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textInputLayout"
+        app:layout_constraintVertical_bias="0.0">
+
+        <RadioButton
+            android:id="@+id/oneUser"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1user" />
+
+        <RadioButton
+            android:id="@+id/threeUsers"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="3user" />
+
+        <RadioButton
+            android:id="@+id/tenUsers"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="10user" />
+
+        <RadioButton
+            android:id="@+id/thirtyUsers"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="30user" />
+
+        <RadioButton
+            android:id="@+id/fiftyUsers"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="50user" />
+
+        <RadioButton
+            android:id="@+id/oneHundredUsers"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="100user" />
+
+        <RadioButton
+            android:id="@+id/fiveHundredUsers"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="500user" />
+    </RadioGroup>
+</androidx.constraintlayout.widget.ConstraintLayout>

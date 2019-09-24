@@ -1,8 +1,7 @@
 <resources>
     <string name="app_name">Eggplant</string>
-    <string name="bottom_navigation_title_rss">RSS</string>
-    <string name="bottom_navigation_title_search">検索</string>
-    <string name="bottom_navigation_title_settings">設定</string>
+    <string name="bottom_navigation_title_popular">人気</string>
+    <string name="bottom_navigation_title_recent">新着</string>
     <string name="tab_title_overall">総合</string>
     <string name="tab_title_general">一般</string>
     <string name="tab_title_social">世の中</string>
@@ -16,11 +15,12 @@
     <string name="feed_mode_title_hot_entry">人気</string>
     <string name="feed_mode_title_entry_list">新着</string>
     <string name="feed_bookmark_count">%s users</string>
-    <string name="menu_item_title_license">ライセンス</string>
     <string name="preference_title_oss_license">オープンソースライセンス</string>
     <string name="preference_title_about_app">このアプリについて</string>
     <string name="preference_title_current_app_version">現在のバージョン</string>
     <string name="context_menu_title_show_bookmarks">ブックマーク一覧を表示</string>
     <string name="sort_type_title_popular">人気</string>
     <string name="sort_type_title_recent">全て</string>
+    <string name="title_navigation_drawer_settings">設定</string>
+    <string name="title_activity_settings">設定</string>
 </resources>

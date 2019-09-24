@@ -1,34 +1,69 @@
 package org.ageage.eggplant
 
+import android.content.Intent
 import android.os.Bundle
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import kotlinx.android.synthetic.main.activity_main.*
+import org.ageage.eggplant.common.enums.Mode
 import org.ageage.eggplant.feed.FeedFragment
-import org.ageage.eggplant.search.SearchFragment
-import org.ageage.eggplant.settings.SettingsFragment
+import org.ageage.eggplant.settings.SettingActivity
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var feedFragment: FeedFragment
-    private lateinit var searchFragment: SearchFragment
-    private lateinit var settingsFragment: SettingsFragment
+    private lateinit var feedFragmentPopular: FeedFragment
+    private lateinit var feedFragmentRecent: FeedFragment
     private lateinit var activeFragment: Fragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        setupBottomNavigation()
+        setSupportActionBar(toolbar)
+        initViews()
         initContents()
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        when (item?.itemId) {
+            android.R.id.home -> {
+                drawerLayout?.openDrawer(GravityCompat.START)
+            }
+        }
+
+        return super.onOptionsItemSelected(item)
+    }
+
+    private fun initViews() {
+        setupToolbar()
+        setupNavigationDrawer()
+        setupBottomNavigation()
+    }
+
+    private fun setupToolbar() {
+        toolbar.setNavigationIcon(R.drawable.ic_menu_black_24dp)
+    }
+
+    private fun setupNavigationDrawer() {
+        navigationDrawer.setNavigationItemSelectedListener {
+            when (it.itemId) {
+                R.id.settings -> {
+                    startActivity(Intent(this, SettingActivity::class.java))
+                }
+            }
+
+            drawerLayout.closeDrawer(GravityCompat.START)
+            true
+        }
     }
 
     private fun setupBottomNavigation() {
         bottomNavigation.setOnNavigationItemSelectedListener {
             when (it.itemId) {
-                R.id.feed -> showContent(feedFragment)
-                R.id.search -> showContent(searchFragment)
-                R.id.settings -> showContent(settingsFragment)
+                R.id.popular -> showContent(feedFragmentPopular)
+                R.id.recent -> showContent(feedFragmentRecent)
                 else -> {
                 }
             }
@@ -39,31 +74,20 @@ class MainActivity : AppCompatActivity() {
 
     private fun initContents() {
 
-        "feed".also { tag ->
-            feedFragment =
+        "feed_popular".also { tag ->
+            feedFragmentPopular =
                 supportFragmentManager.findFragmentByTag(tag) as FeedFragment?
-                    ?: FeedFragment.newInstance().also {
+                    ?: FeedFragment.newInstance(Mode.HOT_ENTRY).also {
                         supportFragmentManager.commit {
                             add(R.id.mainContentView, it, tag)
                         }
                     }
         }
 
-        "search".also { tag ->
-            searchFragment =
-                supportFragmentManager.findFragmentByTag(tag) as SearchFragment?
-                    ?: SearchFragment.newInstance().also {
-                        supportFragmentManager.commit {
-                            add(R.id.mainContentView, it, tag)
-                            hide(it)
-                        }
-                    }
-        }
-
-        "settings".also { tag ->
-            settingsFragment =
-                supportFragmentManager.findFragmentByTag(tag) as SettingsFragment?
-                    ?: SettingsFragment.newInstance().also {
+        "feed_recent".also { tag ->
+            feedFragmentRecent =
+                supportFragmentManager.findFragmentByTag(tag) as FeedFragment?
+                    ?: FeedFragment.newInstance(Mode.ENTRY_LIST).also {
                         supportFragmentManager.commit {
                             add(R.id.mainContentView, it, tag)
                             hide(it)
@@ -71,7 +95,7 @@ class MainActivity : AppCompatActivity() {
                     }
         }
 
-        activeFragment = feedFragment
+        activeFragment = feedFragmentPopular
     }
 
     private fun showContent(f: Fragment) {
