@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="20dp">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/textViewSort"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/search_filter_dialog_text_sort"
+        app:layout_constraintBottom_toTopOf="@+id/textViewTarget"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed" />
+
+    <androidx.appcompat.widget.AppCompatSpinner
+        android:id="@+id/spinnerSort"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@id/textViewSort"
+        app:layout_constraintTop_toTopOf="@+id/textViewSort"
+        app:layout_constraintVertical_bias="0.0"
+        app:layout_constraintWidth_max="150dp" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/textViewTarget"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:text="@string/search_filter_dialog_text_target"
+        app:layout_constraintBottom_toTopOf="@+id/textViewBookmarkCount"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/textViewSort"
+        app:layout_constraintTop_toBottomOf="@+id/textViewSort"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <androidx.appcompat.widget.AppCompatSpinner
+        android:id="@+id/spinnerTarget"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/spinnerSort"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/textViewTarget"
+        app:layout_constraintTop_toTopOf="@+id/textViewTarget"
+        app:layout_constraintVertical_bias="0.0"
+        app:layout_constraintWidth_max="150dp" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/textViewBookmarkCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:text="@string/search_filter_dialog_text_bookmark_count"
+        app:layout_constraintBottom_toTopOf="@id/textViewSafeSearch"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/textViewTarget"
+        app:layout_constraintTop_toBottomOf="@+id/textViewTarget" />
+
+    <androidx.appcompat.widget.AppCompatSpinner
+        android:id="@+id/spinnerBookmarkCount"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/spinnerSort"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/textViewBookmarkCount"
+        app:layout_constraintTop_toTopOf="@+id/textViewBookmarkCount"
+        app:layout_constraintVertical_bias="0.0"
+        app:layout_constraintWidth_max="150dp" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/textViewSafeSearch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:text="@string/search_filter_dialog_text_safe_search"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewBookmarkCount" />
+
+    <!--    <androidx.appcompat.widget.AppCompatSpinner-->
+    <!--        android:id="@+id/spinnerSafeSearch"-->
+    <!--        android:layout_width="0dp"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--        app:layout_constraintEnd_toEndOf="@+id/spinnerSort"-->
+    <!--        app:layout_constraintHorizontal_bias="1.0"-->
+    <!--        app:layout_constraintStart_toEndOf="@+id/textViewSafeSearch"-->
+    <!--        app:layout_constraintTop_toTopOf="@+id/textViewSafeSearch"-->
+    <!--        app:layout_constraintVertical_bias="0.0"-->
+    <!--        app:layout_constraintWidth_max="150dp" />-->
+
+    <androidx.appcompat.widget.SwitchCompat
+        android:id="@+id/switchSafeSearch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/spinnerSort"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/textViewSafeSearch"
+        app:layout_constraintTop_toTopOf="@+id/textViewSafeSearch"
+        app:layout_constraintVertical_bias="0.0" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

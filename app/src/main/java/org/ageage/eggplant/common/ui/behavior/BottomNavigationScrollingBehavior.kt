@@ -1,4 +1,4 @@
-package org.ageage.eggplant.common.ui
+package org.ageage.eggplant.common.ui.behavior
 
 import android.content.Context
 import android.util.AttributeSet

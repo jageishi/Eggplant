@@ -19,6 +19,7 @@ import org.ageage.eggplant.bookmarks.BookmarksActivity
 import org.ageage.eggplant.common.api.response.Item
 import org.ageage.eggplant.common.enums.Category
 import org.ageage.eggplant.common.enums.Mode
+import org.ageage.eggplant.common.ui.adapter.FeedItemAdapter
 import org.ageage.eggplant.databinding.FragmentFeedItemsBinding
 
 private const val MODE = "mode"
@@ -27,6 +28,7 @@ private const val CATEGORY = "category"
 class FeedItemsFragment : Fragment(), FeedItemAdapter.OnClickListener {
 
     private val viewModel: FeedItemsViewModel by viewModels { FeedItemsViewModelFactory() }
+    private lateinit var feedItemAdapter: FeedItemAdapter
     private lateinit var binding: FragmentFeedItemsBinding
     private lateinit var category: Category
     private lateinit var mode: Mode
@@ -37,6 +39,7 @@ class FeedItemsFragment : Fragment(), FeedItemAdapter.OnClickListener {
             mode = it.getSerializable(MODE) as Mode
             category = it.getSerializable(CATEGORY) as Category
         }
+        feedItemAdapter = FeedItemAdapter(requireContext(), this)
     }
 
     override fun onCreateView(
@@ -71,12 +74,13 @@ class FeedItemsFragment : Fragment(), FeedItemAdapter.OnClickListener {
     }
 
     private fun initViewModel() {
-        viewModel.items.observe(viewLifecycleOwner, Observer { itemList ->
-            contentsList.adapter = FeedItemAdapter(requireContext(), itemList, this)
+        viewModel.items.observe(viewLifecycleOwner, Observer {
+            feedItemAdapter.submitItems(it)
         })
     }
 
     private fun initViews() {
+        contentsList.adapter = feedItemAdapter
         contentsList.addItemDecoration(DividerItemDecoration(context, LinearLayoutManager.VERTICAL))
         swipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary)
         swipeRefreshLayout.setOnRefreshListener {

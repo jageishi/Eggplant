@@ -23,4 +23,26 @@
     <string name="sort_type_title_recent">全て</string>
     <string name="title_navigation_drawer_settings">設定</string>
     <string name="title_activity_settings">設定</string>
+    <string name="search_entry_hint">キーワードを入力</string>
+    <string name="snackbar_text_error_occurred">エラーが発生しました。</string>
+    <string name="snackbar_action_text_retry">再試行</string>
+    <string name="snackbar_text_error_load_next_page_failed">エラーが発生しました。</string>
+    <string name="text_empty_result">該当する記事がありませんでした。</string>
+    <string name="search_filter_dialog_title">"検索フィルタ"</string>
+    <string name="search_filter_dialog_text_sort">並び替え</string>
+    <string name="search_filter_dialog_text_target">対象</string>
+    <string name="search_filter_dialog_text_bookmark_count">ブックマーク数</string>
+    <string name="search_filter_dialog_text_safe_search">セーフサーチ</string>
+    <string name="search_filter_dialog_button_cancel">キャンセル</string>
+    <string name="search_filter_dialog_button_apply">検索</string>
+    <string name="search_option_sort_recent">新着順</string>
+    <string name="search_option_sort_popular">人気順</string>
+    <string name="search_option_target_text">本文</string>
+    <string name="search_option_target_tag">タグ</string>
+    <string name="search_option_target_title">タイトル</string>
+    <string name="search_option_minimum_bookmark_count_one">1 user</string>
+    <string name="search_option_minimum_bookmark_count_three">3 users</string>
+    <string name="search_option_minimum_bookmark_count_fifty">50 users</string>
+    <string name="search_option_minimum_bookmark_count_one_hundred">100 users</string>
+    <string name="search_option_minimum_bookmark_count_five_hundred">500 users</string>
 </resources>

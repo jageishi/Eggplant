@@ -1,30 +1,85 @@
 package org.ageage.eggplant.common.repository
 
 import io.reactivex.Single
+import okhttp3.HttpUrl
+import okhttp3.HttpUrl.Companion.toHttpUrl
 import okhttp3.Request
 import okhttp3.Response
 import org.ageage.eggplant.common.api.Client
 import org.ageage.eggplant.common.api.response.Item
 import org.ageage.eggplant.common.enums.Category
 import org.ageage.eggplant.common.enums.Mode
+import org.ageage.eggplant.common.enums.SearchTarget
+import org.ageage.eggplant.common.model.SearchFilterOption
 import org.xmlpull.v1.XmlPullParser
 import org.xmlpull.v1.XmlPullParserFactory
-import java.io.IOException
+
+private const val BASE_URL = "https://b.hatena.ne.jp"
 
 class FeedRepository {
 
     fun fetchRss(mode: Mode, category: Category): Single<List<Item>> {
+        val url = "${BASE_URL}${mode.url}${category.url}.rss"
+            .toHttpUrl()
+            .newBuilder().build()
+        return fetchRss(url)
+    }
+
+    fun search(
+        keyword: String,
+        searchFilterOption: SearchFilterOption,
+        page: Int
+    ): Single<List<Item>> {
+        val url = when (searchFilterOption.target) {
+            SearchTarget.TEXT -> "${BASE_URL}/search${SearchTarget.TEXT.url}"
+            SearchTarget.TAG -> "${BASE_URL}/search${SearchTarget.TAG.url}"
+            SearchTarget.TITLE -> "${BASE_URL}/search${SearchTarget.TITLE.url}"
+        }
+        val httpUrl = url.toHttpUrl()
+            .newBuilder()
+            .also {
+                it.addQueryParameter(
+                    "q",
+                    keyword
+                )
+                it.addQueryParameter(
+                    "mode",
+                    "rss"
+                )
+                it.addQueryParameter(
+                    "sort",
+                    searchFilterOption.sortType.queryParameterValue
+                )
+                it.addQueryParameter(
+                    "users",
+                    searchFilterOption.minimumBookmarkCount.queryParameterValue
+                )
+                it.addQueryParameter(
+                    "safe",
+                    if (searchFilterOption.isSafeSearchEnabled) "on" else "off"
+                )
+                it.addQueryParameter(
+                    "page",
+                    page.toString()
+                )
+            }
+            .build()
+        return fetchRss(httpUrl)
+    }
+
+    private fun fetchRss(url: HttpUrl): Single<List<Item>> {
         return Single.create {
-            try {
-                val response = Client.getInstance().newCall(
-                    Request.Builder()
-                        .url("https://b.hatena.ne.jp${mode.url}${category.url}.rss")
-                        .get()
-                        .build()
-                ).execute()
+            val response = Client.getInstance().newCall(
+                Request.Builder()
+                    .url(url)
+                    .get()
+                    .build()
+            ).execute()
+
+            if (response.isSuccessful) {
                 it.onSuccess(parse(response))
-            } catch (e: IOException) {
-                it.onError(e)
+            } else {
+                it.onError(IllegalStateException("Request failed with status code ${response.code}"))
             }
         }
     }

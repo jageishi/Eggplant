@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <import type="org.ageage.eggplant.search.SearchResultViewModel.Status" />
+
+        <variable
+            name="viewModel"
+            type="org.ageage.eggplant.search.SearchResultViewModel" />
+
+    </data>
+
+    <FrameLayout
+        android:id="@+id/searchresult"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".search.SearchResultFragment">
+
+
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swipeRefreshLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="@{viewModel.isEmptyItems() ? View.GONE : View.VISIBLE}"
+            app:refreshing="@{viewModel.status.loading}">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/contentsList"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scrollbars="vertical"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:listitem="@layout/feed_item" />
+
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/emptyResultMessage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/text_empty_result"
+            android:textSize="18sp"
+            android:visibility="@{viewModel.isEmptyItems() ? View.VISIBLE : View.GONE}" />
+
+    </FrameLayout>
+
+</layout>

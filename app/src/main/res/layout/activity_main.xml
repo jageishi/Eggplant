@@ -38,7 +38,7 @@
             android:layout_gravity="bottom"
             android:background="@color/colorSurface"
             app:itemIconTint="@color/color_bottom_navigation_icon_tint"
-            app:layout_behavior=".common.ui.BottomNavigationScrollingBehavior"
+            app:layout_behavior=".common.ui.behavior.BottomNavigationScrollingBehavior"
             app:menu="@menu/menu_bottom_navigation" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
