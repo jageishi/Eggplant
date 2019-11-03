@@ -1,9 +1,10 @@
 package org.ageage.eggplant.feed
 
-import android.annotation.SuppressLint
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.rxkotlin.addTo
 import org.ageage.eggplant.common.api.response.Item
 import org.ageage.eggplant.common.enums.Category
 import org.ageage.eggplant.common.enums.Mode
@@ -15,6 +16,8 @@ class FeedItemsViewModel(
     private val schedulerProvider: BaseSchedulerProvider
 ) : ViewModel() {
 
+    private val disposable = CompositeDisposable()
+
     private val _items = MutableLiveData<List<Item>>()
     val items: LiveData<List<Item>>
         get() = _items
@@ -25,7 +28,11 @@ class FeedItemsViewModel(
 
     private var isAlreadyLoaded = false
 
-    @SuppressLint("CheckResult")
+    override fun onCleared() {
+        super.onCleared()
+        disposable.clear()
+    }
+
     fun loadRss(mode: Mode, category: Category, forceLoad: Boolean = false) {
         if (isAlreadyLoaded && !forceLoad) {
             return
@@ -45,5 +52,6 @@ class FeedItemsViewModel(
                     _isLoading.postValue(false)
                 }
             )
+            .addTo(disposable)
     }
 }

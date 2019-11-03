@@ -13,8 +13,7 @@ import org.ageage.eggplant.R
 import org.ageage.eggplant.common.api.response.Item
 import org.ageage.eggplant.common.ui.adapter.viewholder.FeedItemHolder
 import org.ageage.eggplant.common.ui.adapter.viewholder.FeedLoadingItemHolder
-import org.ageage.eggplant.databinding.FeedItemBinding
-import org.ageage.eggplant.databinding.FeedLoadingItemBinding
+import org.ageage.eggplant.databinding.ItemFeedBinding
 
 class FeedItemAdapter(
     private val context: Context,
@@ -29,9 +28,9 @@ class FeedItemAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         when (viewType) {
             VIEW_TYPE_FEED -> {
-                val binding = DataBindingUtil.inflate<FeedItemBinding>(
+                val binding = DataBindingUtil.inflate<ItemFeedBinding>(
                     LayoutInflater.from(parent.context),
-                    R.layout.feed_item,
+                    R.layout.item_feed,
                     parent,
                     false
                 )
@@ -60,9 +59,9 @@ class FeedItemAdapter(
 
             VIEW_TYPE_PROGRESS -> {
                 return FeedLoadingItemHolder(
-                    DataBindingUtil.inflate<FeedLoadingItemBinding>(
+                    DataBindingUtil.inflate(
                         LayoutInflater.from(parent.context),
-                        R.layout.feed_loading_item,
+                        R.layout.item_feed_loading,
                         parent,
                         false
                     )

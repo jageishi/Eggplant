@@ -9,7 +9,7 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import org.ageage.eggplant.R
 import org.ageage.eggplant.common.model.Bookmark
-import org.ageage.eggplant.databinding.BookmarkItemBinding
+import org.ageage.eggplant.databinding.ItemBookmarkBinding
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -19,9 +19,9 @@ class BookmarksAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BookmarksHolder {
         val binding =
-            DataBindingUtil.inflate<BookmarkItemBinding>(
+            DataBindingUtil.inflate<ItemBookmarkBinding>(
                 LayoutInflater.from(parent.context),
-                R.layout.bookmark_item,
+                R.layout.item_bookmark,
                 parent,
                 false
             )
