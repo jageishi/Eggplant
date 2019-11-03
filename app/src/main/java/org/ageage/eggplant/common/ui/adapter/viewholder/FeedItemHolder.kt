@@ -1,4 +1,4 @@
-package org.ageage.eggplant.feed
+package org.ageage.eggplant.common.ui.adapter.viewholder
 
 import androidx.recyclerview.widget.RecyclerView
 import org.ageage.eggplant.databinding.FeedItemBinding

@@ -2,6 +2,7 @@ package org.ageage.eggplant
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
@@ -10,6 +11,7 @@ import androidx.fragment.app.commit
 import kotlinx.android.synthetic.main.activity_main.*
 import org.ageage.eggplant.common.enums.Mode
 import org.ageage.eggplant.feed.FeedFragment
+import org.ageage.eggplant.search.SearchActivity
 import org.ageage.eggplant.settings.SettingActivity
 
 class MainActivity : AppCompatActivity() {
@@ -26,14 +28,33 @@ class MainActivity : AppCompatActivity() {
         initContents()
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_toolbar, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when (item?.itemId) {
             android.R.id.home -> {
                 drawerLayout?.openDrawer(GravityCompat.START)
             }
+
+            R.id.search -> {
+                startActivity(Intent(this, SearchActivity::class.java))
+            }
         }
 
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun onBackPressed() {
+
+        if (drawerLayout.isDrawerOpen(navigationDrawer)) {
+            drawerLayout.closeDrawer(GravityCompat.START)
+            return
+        }
+
+        super.onBackPressed()
     }
 
     private fun initViews() {
