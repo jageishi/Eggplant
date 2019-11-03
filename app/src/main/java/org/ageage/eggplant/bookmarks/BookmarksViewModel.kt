@@ -1,9 +1,10 @@
 package org.ageage.eggplant.bookmarks
 
-import android.annotation.SuppressLint
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.rxkotlin.addTo
 import org.ageage.eggplant.common.enums.SortType
 import org.ageage.eggplant.common.model.Bookmark
 import org.ageage.eggplant.common.repository.BookmarkRepository
@@ -13,6 +14,8 @@ class BookmarksViewModel(
     private val repository: BookmarkRepository,
     private val schedulerProvider: BaseSchedulerProvider
 ) : ViewModel() {
+
+    private val disposable = CompositeDisposable()
 
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: MutableLiveData<Boolean>
@@ -24,7 +27,11 @@ class BookmarksViewModel(
 
     private var isAlreadyLoaded = false
 
-    @SuppressLint("CheckResult")
+    override fun onCleared() {
+        super.onCleared()
+        disposable.clear()
+    }
+
     fun loadBookmarks(url: String, sortType: SortType, forceLoad: Boolean = false) {
         if (isAlreadyLoaded && !forceLoad) {
             return
@@ -57,5 +64,6 @@ class BookmarksViewModel(
             }, {
                 _isLoading.value = false
             })
+            .addTo(disposable)
     }
 }

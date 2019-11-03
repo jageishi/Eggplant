@@ -1,8 +1,8 @@
 package org.ageage.eggplant.common.ui.adapter.viewholder
 
 import androidx.recyclerview.widget.RecyclerView
-import org.ageage.eggplant.databinding.FeedLoadingItemBinding
+import org.ageage.eggplant.databinding.ItemFeedLoadingBinding
 
 class FeedLoadingItemHolder(
-    binding: FeedLoadingItemBinding
+    binding: ItemFeedLoadingBinding
 ) : RecyclerView.ViewHolder(binding.root)

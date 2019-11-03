@@ -27,7 +27,7 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                tools:listitem="@layout/bookmark_item" />
+                tools:listitem="@layout/item_bookmark" />
 
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 

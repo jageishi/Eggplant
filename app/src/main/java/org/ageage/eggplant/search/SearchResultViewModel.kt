@@ -55,8 +55,8 @@ class SearchResultViewModel(
     )
 
     override fun onCleared() {
-        disposable.clear()
         super.onCleared()
+        disposable.clear()
     }
 
     fun search(forceLoad: Boolean = false) {
@@ -69,7 +69,7 @@ class SearchResultViewModel(
             .doOnSubscribe {
                 _status.postValue(Status.Loading)
             }
-            .doOnSuccess() {
+            .doOnSuccess {
                 _status.postValue(Status.Success)
             }
             .doOnError {

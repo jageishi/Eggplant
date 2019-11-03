@@ -108,21 +108,30 @@ class FeedRepository {
                     text = xpp.text ?: ""
                 }
                 XmlPullParser.END_TAG -> {
-                    if (tagName == "item") {
-                        item?.let { items.add(it) }
-                    } else if (tagName == "title") {
-                        item?.let { it.title = text }
-                    } else if (tagName == "link") {
-                        item?.let {
-                            it.link = text
-                            it.faviconUrl = "http://favicon.hatena.ne.jp/?url=$text"
+                    item?.let {
+                        when (tagName) {
+                            "item" -> {
+                                items.add(it)
+                            }
+                            "title" -> {
+                                it.title = text
+                            }
+                            "link" -> {
+                                it.link = text
+                                it.faviconUrl = "http://favicon.hatena.ne.jp/?url=$text"
+                            }
+                            "description" -> {
+                                it.description = text
+                            }
+                            "bookmarkcount" -> {
+                                it.bookmarkCount = text
+                            }
+                            "imageurl" -> {
+                                it.imageUrl = text
+                            }
+                            else -> {
+                            }
                         }
-                    } else if (tagName == "description") {
-                        item?.let { it.description = text }
-                    } else if (tagName == "bookmarkcount") {
-                        item?.let { it.bookmarkCount = text }
-                    } else if (tagName == "imageurl") {
-                        item?.let { it.imageUrl = text }
                     }
                 }
                 else -> {
