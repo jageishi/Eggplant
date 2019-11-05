@@ -123,8 +123,8 @@ class SearchResultViewModel(
         object LoadingNextPage : Status()
         object Success : Status()
         object ReachedLastPage : Status()
-        class Error(val error: Throwable) : Status()
-        class ErrorLoadNextPage(val error: Throwable) : Status()
+        data class Error(val error: Throwable) : Status()
+        data class ErrorLoadNextPage(val error: Throwable) : Status()
 
         val isLoading: Boolean
             get() = this is Loading
