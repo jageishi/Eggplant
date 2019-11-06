@@ -34,6 +34,9 @@
             android:name=".search.SearchResultActivity"
             android:theme="@style/AppTheme.ActionBar" />
         <activity
+            android:name=".login.LoginActivity"
+            android:theme="@style/AppTheme.ActionBar" />
+        <activity
             android:name="com.google.android.gms.oss.licenses.OssLicensesMenuActivity"
             android:theme="@style/AppTheme.ActionBar" />
         <activity
