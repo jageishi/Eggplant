@@ -87,14 +87,9 @@ class SearchResultViewModelTest {
         orderedVerifier.verify(statusObserver, times(1))
             .onChanged(SearchResultViewModel.Status.Loading)
         orderedVerifier.verify(statusObserver, times(1))
-            .onChanged(any())
+            .onChanged(SearchResultViewModel.Status.Error(exception))
         orderedVerifier.verify(itemObserver, never())
             .onChanged(any())
-
-        assertThat(viewModel.status.value)
-            .isInstanceOf(SearchResultViewModel.Status.Error::class.java)
-        assertThat((viewModel.status.value as SearchResultViewModel.Status.Error).error)
-            .isEqualTo(exception)
     }
 
     @Test
@@ -194,14 +189,10 @@ class SearchResultViewModelTest {
         orderedVerifier.verify(statusObserver, times(1))
             .onChanged(SearchResultViewModel.Status.LoadingNextPage)
         orderedVerifier.verify(statusObserver, times(1))
-            .onChanged(any())
+            .onChanged(SearchResultViewModel.Status.ErrorLoadNextPage(exception))
         orderedVerifier.verify(itemObserver, never())
             .onChanged(any())
 
-        assertThat(viewModel.status.value)
-            .isInstanceOf(SearchResultViewModel.Status.ErrorLoadNextPage::class.java)
-        assertThat((viewModel.status.value as SearchResultViewModel.Status.ErrorLoadNextPage).error)
-            .isEqualTo(exception)
         assertThat(viewModel.hasLoadNextPageError)
             .isTrue()
     }
