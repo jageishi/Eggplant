@@ -22,6 +22,7 @@
     <string name="sort_type_title_popular">人気</string>
     <string name="sort_type_title_recent">全て</string>
     <string name="title_navigation_drawer_settings">設定</string>
+    <string name="title_navigation_drawer_login">ログイン</string>
     <string name="title_activity_settings">設定</string>
     <string name="search_entry_hint">キーワードを入力</string>
     <string name="snackbar_text_error_occurred">エラーが発生しました。</string>
@@ -45,4 +46,7 @@
     <string name="search_option_minimum_bookmark_count_fifty">50 users</string>
     <string name="search_option_minimum_bookmark_count_one_hundred">100 users</string>
     <string name="search_option_minimum_bookmark_count_five_hundred">500 users</string>
+    <string name="title_login_activity">ログイン</string>
+    <string name="description_for_cooperation_hatena">はてなにログインして連携を許可することで、Eggplantからブックマークの追加・削除などを行うことができるようになります。</string>
+    <string name="button_text_for_login_hatena">はてなにログインする</string>
 </resources>

@@ -15,7 +15,7 @@ class HatenaOAuthManager(
     private var service: OAuth10aService? = null
     private var requestToken: OAuth1RequestToken? = null
 
-    fun fetchAuthorizationUrl(): Single<String?> {
+    fun fetchAuthorizationUrl(): Single<String> {
         return Single.create {
             service = ServiceBuilder(consumerKey)
                 .apiSecret(consumerSecret)
