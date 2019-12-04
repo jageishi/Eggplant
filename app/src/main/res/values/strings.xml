@@ -48,5 +48,7 @@
     <string name="search_option_minimum_bookmark_count_five_hundred">500 users</string>
     <string name="title_login_activity">ログイン</string>
     <string name="description_for_cooperation_hatena">はてなにログインして連携を許可することで、Eggplantからブックマークの追加・削除などを行うことができるようになります。</string>
-    <string name="button_text_for_login_hatena">はてなにログインする</string>
+    <string name="button_text_for_access_to_hatena">はてなとの連携を許可する</string>
+    <string name="hint_for_login_to_hatena">コードを貼り付けてください</string>
+    <string name="button_text_for_login_to_hatena">はてなにログインする</string>
 </resources>

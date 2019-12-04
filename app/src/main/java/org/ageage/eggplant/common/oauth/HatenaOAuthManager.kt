@@ -5,7 +5,7 @@ import com.github.scribejava.core.model.OAuth1RequestToken
 import com.github.scribejava.core.oauth.OAuth10aService
 import io.reactivex.Single
 
-private const val CALLBACK = "https://ageage.org"
+private const val CALLBACK = "oob"
 
 class HatenaOAuthManager(
     private val consumerKey: String,
@@ -32,8 +32,7 @@ class HatenaOAuthManager(
     fun fetchAccessToken(oauthVerifier: String): Single<String> {
         return Single.create {
             service?.let { oAuthService ->
-                val accessToken =
-                    oAuthService.getAccessToken(requestToken, oauthVerifier)
+                val accessToken = oAuthService.getAccessToken(requestToken, oauthVerifier)
                 it.onSuccess(accessToken.rawResponse)
             }
         }
