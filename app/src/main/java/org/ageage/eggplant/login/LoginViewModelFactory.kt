@@ -2,6 +2,8 @@ package org.ageage.eggplant.login
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import org.ageage.eggplant.common.repository.LoginRepository
+import org.ageage.eggplant.common.schedulerprovider.SchedulerProvider
 
 class LoginViewModelFactory : ViewModelProvider.Factory {
 
@@ -11,6 +13,9 @@ class LoginViewModelFactory : ViewModelProvider.Factory {
             throw IllegalArgumentException("Illegal ViewModel class.")
         }
 
-        return LoginViewModel() as T
+        return LoginViewModel(
+            LoginRepository(),
+            SchedulerProvider()
+        ) as T
     }
 }
