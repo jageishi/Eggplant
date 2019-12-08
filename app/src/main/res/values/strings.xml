@@ -51,4 +51,6 @@
     <string name="button_text_for_access_to_hatena">はてなとの連携を許可する</string>
     <string name="hint_for_login_to_hatena">コードを貼り付けてください</string>
     <string name="button_text_for_login_to_hatena">はてなにログインする</string>
+    <string name="failed_to_link_with_hatena">はてなとの連携に失敗しました。</string>
+    <string name="failed_to_login">ログインに失敗しました。</string>
 </resources>

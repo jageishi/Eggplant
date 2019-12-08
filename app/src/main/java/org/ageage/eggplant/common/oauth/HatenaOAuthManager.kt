@@ -1,6 +1,7 @@
 package org.ageage.eggplant.common.oauth
 
 import com.github.scribejava.core.builder.ServiceBuilder
+import com.github.scribejava.core.model.OAuth1AccessToken
 import com.github.scribejava.core.model.OAuth1RequestToken
 import com.github.scribejava.core.oauth.OAuth10aService
 import io.reactivex.Single
@@ -29,11 +30,11 @@ class HatenaOAuthManager(
         }
     }
 
-    fun fetchAccessToken(oauthVerifier: String): Single<String> {
+    fun fetchAccessToken(oauthVerifier: String): Single<OAuth1AccessToken> {
         return Single.create {
             service?.let { oAuthService ->
                 val accessToken = oAuthService.getAccessToken(requestToken, oauthVerifier)
-                it.onSuccess(accessToken.rawResponse)
+                it.onSuccess(accessToken)
             }
         }
     }

@@ -41,6 +41,11 @@ class LoginFragment : Fragment() {
                     startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(it.data)))
                 }
                 is LoginViewModel.Status.Error -> {
+                    Toast.makeText(
+                        requireContext(),
+                        getString(R.string.failed_to_link_with_hatena),
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
         })
@@ -53,6 +58,11 @@ class LoginFragment : Fragment() {
                     Toast.makeText(requireContext(), "成功", Toast.LENGTH_SHORT).show()
                 }
                 is LoginViewModel.Status.Error -> {
+                    Toast.makeText(
+                        requireContext(),
+                        getString(R.string.failed_to_login),
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
         })

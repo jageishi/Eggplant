@@ -11,4 +11,8 @@ class LoginRepository {
     fun fetchAuthorizationUrl() = oAuthManager.fetchAuthorizationUrl()
 
     fun fetchAccessToken(oAuthVerifier: String) = oAuthManager.fetchAccessToken(oAuthVerifier)
+
+    fun fetchUserData() {
+
+    }
 }
