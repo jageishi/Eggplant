@@ -4,7 +4,7 @@ import com.github.scribejava.core.builder.api.DefaultApi10a
 
 class HatenaOAuthApi : DefaultApi10a() {
     override fun getRequestTokenEndpoint(): String {
-        return "https://www.hatena.com/oauth/initiate?scope=read_public,write_public"
+        return "https://www.hatena.com/oauth/initiate?scope=read_public,write_public,read_private,write_public"
     }
 
     override fun getAuthorizationBaseUrl(): String {

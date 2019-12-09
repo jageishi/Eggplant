@@ -53,4 +53,5 @@
     <string name="button_text_for_login_to_hatena">はてなにログインする</string>
     <string name="failed_to_link_with_hatena">はてなとの連携に失敗しました。</string>
     <string name="failed_to_login">ログインに失敗しました。</string>
+    <string name="succeeded_to_login">ログインに成功しました。</string>
 </resources>

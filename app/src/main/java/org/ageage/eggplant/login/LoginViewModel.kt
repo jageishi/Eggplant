@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.addTo
+import org.ageage.eggplant.common.db.entity.User
 import org.ageage.eggplant.common.repository.LoginRepository
 import org.ageage.eggplant.common.schedulerprovider.BaseSchedulerProvider
 
@@ -50,10 +51,17 @@ class LoginViewModel(
 
     fun login(oAuthVerifier: String) {
         repository.fetchAccessToken(oAuthVerifier)
+            .flatMap {
+                repository.fetchUser(it.token, it.tokenSecret)
+                    .map { user ->
+                        User(user.name, it.token, it.tokenSecret)
+                    }
+            }
             .doOnSubscribe {
                 _statusLogin.postValue(Status.Loading())
             }
             .doOnSuccess {
+                repository.saveUser(it)
                 _statusLogin.postValue(Status.Success(""))
             }
             .doOnError {
