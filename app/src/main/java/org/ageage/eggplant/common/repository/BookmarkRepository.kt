@@ -1,8 +1,6 @@
 package org.ageage.eggplant.common.repository
 
 import android.text.format.DateFormat
-import io.reactivex.Observable
-import io.reactivex.rxkotlin.toObservable
 import org.ageage.eggplant.common.api.BookmarkService
 import org.ageage.eggplant.common.api.Client
 import org.ageage.eggplant.common.api.response.mapper.toBookmarks
@@ -13,14 +11,13 @@ import java.util.*
 
 class BookmarkRepository {
 
-    suspend fun fetchBookmarks(url: String): Observable<List<Bookmark>> {
+    suspend fun fetchBookmarks(url: String): List<Bookmark> {
         val service =
             Client.retrofitClient(Endpoint.HATENA_BOOKMARK)
                 .create(BookmarkService::class.java)
 
-        return service.bookmarkEntry(url)
-            .let { bookmarkEntry ->
-                bookmarkEntry.bookmarkResponses
+        service.bookmarkEntry(url).let { bookmarkEntry ->
+                return bookmarkEntry.bookmarkResponses
                     .filter {
                         it.comment.isNotEmpty()
                     }
@@ -36,8 +33,7 @@ class BookmarkRepository {
                         Client.retrofitClient(Endpoint.HATENA_STAR)
                             .create(BookmarkService::class.java)
                             .startCount("${Endpoint.HATENA_BOOKMARK.url}/${bookmark.user}/${timestamp}#bookmark-${bookmarkEntry.eid}")
-                    }
-                    .map { responses ->
+                    }.let { responses ->
                         bookmarkEntry.bookmarkResponses
                             .filter {
                                 it.comment.isNotEmpty()
@@ -47,7 +43,6 @@ class BookmarkRepository {
                             }
                         bookmarkEntry.bookmarkResponses.toBookmarks()
                     }
-                    .toObservable()
             }
     }
 }
