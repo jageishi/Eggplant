@@ -3,7 +3,6 @@ package org.ageage.eggplant.feed
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import org.ageage.eggplant.common.repository.FeedRepository
-import org.ageage.eggplant.common.schedulerprovider.SchedulerProvider
 
 class FeedItemsViewModelFactory : ViewModelProvider.Factory {
 
@@ -14,8 +13,7 @@ class FeedItemsViewModelFactory : ViewModelProvider.Factory {
         }
 
         return FeedItemsViewModel(
-            FeedRepository(),
-            SchedulerProvider()
+            FeedRepository()
         ) as T
     }
 }

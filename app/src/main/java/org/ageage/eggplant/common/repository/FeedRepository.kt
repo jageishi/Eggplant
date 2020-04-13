@@ -1,6 +1,7 @@
 package org.ageage.eggplant.common.repository
 
-import io.reactivex.Single
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import okhttp3.HttpUrl
 import okhttp3.HttpUrl.Companion.toHttpUrl
 import okhttp3.Request
@@ -18,18 +19,18 @@ private const val BASE_URL = "https://b.hatena.ne.jp"
 
 class FeedRepository {
 
-    fun fetchRss(mode: Mode, category: Category): Single<List<Item>> {
+    suspend fun fetchRss(mode: Mode, category: Category): List<Item> {
         val url = "${BASE_URL}${mode.url}${category.url}.rss"
             .toHttpUrl()
             .newBuilder().build()
         return fetchRss(url)
     }
 
-    fun search(
+    suspend fun search(
         keyword: String,
         searchFilterOption: SearchFilterOption,
         page: Int
-    ): Single<List<Item>> {
+    ): List<Item> {
         val url = when (searchFilterOption.target) {
             SearchTarget.TEXT -> "${BASE_URL}/search${SearchTarget.TEXT.url}"
             SearchTarget.TAG -> "${BASE_URL}/search${SearchTarget.TAG.url}"
@@ -67,8 +68,8 @@ class FeedRepository {
         return fetchRss(httpUrl)
     }
 
-    private fun fetchRss(url: HttpUrl): Single<List<Item>> {
-        return Single.create {
+    private suspend fun fetchRss(url: HttpUrl): List<Item> {
+        return withContext(Dispatchers.IO) {
             val response = Client.getInstance().newCall(
                 Request.Builder()
                     .url(url)
@@ -77,9 +78,9 @@ class FeedRepository {
             ).execute()
 
             if (response.isSuccessful) {
-                it.onSuccess(parse(response))
+                parse(response)
             } else {
-                it.onError(IllegalStateException("Request failed with status code ${response.code}"))
+                throw IllegalStateException("Request failed with status code ${response.code}")
             }
         }
     }

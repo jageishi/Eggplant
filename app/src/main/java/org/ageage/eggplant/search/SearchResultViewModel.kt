@@ -1,25 +1,17 @@
 package org.ageage.eggplant.search
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations
-import androidx.lifecycle.ViewModel
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.rxkotlin.addTo
+import androidx.lifecycle.*
+import kotlinx.coroutines.launch
 import org.ageage.eggplant.common.api.response.Item
 import org.ageage.eggplant.common.enums.MinimumBookmarkCount
 import org.ageage.eggplant.common.enums.SearchTarget
 import org.ageage.eggplant.common.enums.SortType
 import org.ageage.eggplant.common.model.SearchFilterOption
 import org.ageage.eggplant.common.repository.FeedRepository
-import org.ageage.eggplant.common.schedulerprovider.BaseSchedulerProvider
 
 class SearchResultViewModel(
-    private val repository: FeedRepository,
-    private val schedulerProvider: BaseSchedulerProvider
+    private val repository: FeedRepository
 ) : ViewModel() {
-
-    private val disposable = CompositeDisposable()
 
     private val _items = MutableLiveData<List<Item>>()
     val items: LiveData<List<Item>>
@@ -54,68 +46,48 @@ class SearchResultViewModel(
         true
     )
 
-    override fun onCleared() {
-        super.onCleared()
-        disposable.clear()
-    }
-
     fun search(forceLoad: Boolean = false) {
         if (isAlreadyLoaded && !forceLoad) {
             return
         }
 
-        repository
-            .search(keyword, searchFilterOption, 1)
-            .doOnSubscribe {
-                _status.postValue(Status.Loading)
+        viewModelScope.launch {
+            _status.value = Status.Loading
+            try {
+                val feedItems = repository.search(keyword, searchFilterOption, 1)
+                _status.value = Status.Success
+                currentPageIndex = 1
+                _items.value = feedItems
+                isAlreadyLoaded = true
+            } catch (e: Throwable) {
+                _status.value = Status.Error(e)
             }
-            .doOnSuccess {
-                _status.postValue(Status.Success)
-            }
-            .doOnError {
-                _status.postValue(Status.Error(it))
-            }
-            .subscribeOn(schedulerProvider.io())
-            .observeOn(schedulerProvider.ui())
-            .subscribe(
-                { itemList ->
-                    currentPageIndex = 1
-                    _items.postValue(itemList)
-                    isAlreadyLoaded = true
-                },
-                {
-                }
-            )
-            .addTo(disposable)
+        }
     }
 
     fun loadNextPage() {
-        repository
-            .search(keyword, searchFilterOption, currentPageIndex + 1)
-            .doOnSubscribe {
-                _status.postValue(Status.LoadingNextPage)
-            }
-            .doOnSuccess {
-                _status.postValue(Status.Success)
-            }
-            .doOnError {
-                _status.postValue(Status.ErrorLoadNextPage(it))
-            }
-            .subscribeOn(schedulerProvider.io())
-            .observeOn(schedulerProvider.ui())
-            .subscribe(
-                { itemList ->
-                    if (itemList.isEmpty()) {
-                        _status.postValue(Status.ReachedLastPage)
-                    } else {
-                        currentPageIndex += 1
-                        _items.postValue(items.value?.union(itemList)?.toList() ?: itemList)
-                    }
-                },
-                {
+        viewModelScope.launch {
+            _status.value = Status.LoadingNextPage
+            try {
+                val feedItems = repository.search(
+                    keyword,
+                    searchFilterOption,
+                    currentPageIndex + 1
+                )
+
+                _status.value = Status.Success
+
+                if (feedItems.isEmpty()) {
+                    _status.value = Status.ReachedLastPage
+                } else {
+                    currentPageIndex += 1
+                    _items.value = items.value?.union(feedItems)?.toList() ?: feedItems
                 }
-            )
-            .addTo(disposable)
+
+            } catch (e: Throwable) {
+                _status.value = Status.ErrorLoadNextPage(e)
+            }
+        }
     }
 
     sealed class Status {

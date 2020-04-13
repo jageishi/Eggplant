@@ -3,7 +3,6 @@ package org.ageage.eggplant.search
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import org.ageage.eggplant.common.repository.FeedRepository
-import org.ageage.eggplant.common.schedulerprovider.SchedulerProvider
 
 class SearchResultViewModelFactory : ViewModelProvider.Factory {
 
@@ -14,8 +13,7 @@ class SearchResultViewModelFactory : ViewModelProvider.Factory {
         }
 
         return SearchResultViewModel(
-            FeedRepository(),
-            SchedulerProvider()
+            FeedRepository()
         ) as T
     }
 }
