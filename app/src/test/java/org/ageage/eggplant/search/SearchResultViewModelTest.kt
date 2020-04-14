@@ -94,10 +94,10 @@ class SearchResultViewModelTest {
 
             viewModel.search()
 
-            orderedVerifier.verify(mockRepository, times(1))
-                .search("", defaultSearchFilterOption, 1)
             orderedVerifier.verify(statusObserver, times(1))
                 .onChanged(SearchResultViewModel.Status.Loading)
+            orderedVerifier.verify(mockRepository, times(1))
+                .search("", defaultSearchFilterOption, 1)
             orderedVerifier.verify(statusObserver, times(1))
                 .onChanged(SearchResultViewModel.Status.Error(exception))
             orderedVerifier.verify(itemObserver, never())
@@ -175,10 +175,10 @@ class SearchResultViewModelTest {
 
             viewModel.loadNextPage()
 
-            orderedVerifier.verify(mockRepository, times(1))
-                .search("", defaultSearchFilterOption, 2)
             orderedVerifier.verify(statusObserver, times(1))
                 .onChanged(SearchResultViewModel.Status.LoadingNextPage)
+            orderedVerifier.verify(mockRepository, times(1))
+                .search("", defaultSearchFilterOption, 2)
             orderedVerifier.verify(statusObserver, times(1))
                 .onChanged(SearchResultViewModel.Status.Success)
             orderedVerifier.verify(itemObserver, times(1))
