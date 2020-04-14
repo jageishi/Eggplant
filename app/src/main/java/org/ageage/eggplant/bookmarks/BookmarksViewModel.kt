@@ -3,8 +3,8 @@ package org.ageage.eggplant.bookmarks
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.rxkotlin.addTo
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.launch
 import org.ageage.eggplant.common.enums.SortType
 import org.ageage.eggplant.common.model.Bookmark
 import org.ageage.eggplant.common.repository.BookmarkRepository
@@ -14,8 +14,6 @@ class BookmarksViewModel(
     private val repository: BookmarkRepository,
     private val schedulerProvider: BaseSchedulerProvider
 ) : ViewModel() {
-
-    private val disposable = CompositeDisposable()
 
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: MutableLiveData<Boolean>
@@ -27,43 +25,34 @@ class BookmarksViewModel(
 
     private var isAlreadyLoaded = false
 
-    override fun onCleared() {
-        super.onCleared()
-        disposable.clear()
-    }
-
     fun loadBookmarks(url: String, sortType: SortType, forceLoad: Boolean = false) {
         if (isAlreadyLoaded && !forceLoad) {
             return
         }
 
-        _isLoading.value = true
-        repository
-            .fetchBookmarks(url)
-            .subscribeOn(schedulerProvider.io())
-            .observeOn(schedulerProvider.ui())
-            .subscribe({ bookmarkList ->
-                val sortedBookmarks = when (sortType) {
-                    SortType.POPULAR -> {
-                        bookmarkList
-                            .filter { bookmark -> bookmark.comment.isNotEmpty() }
-                            .sortedByDescending { bookmark -> bookmark.yellowStarNumber }
-                            .take(10)
+        viewModelScope.launch {
+            _isLoading.value = true
+            try {
+                _bookmarks.value =
+                    repository.fetchBookmarks(url).let {
+                        when (sortType) {
+                            SortType.POPULAR -> {
+                                it.filter { bookmark -> bookmark.comment.isNotEmpty() }
+                                    .sortedByDescending { bookmark -> bookmark.yellowStarNumber }
+                                    .take(10)
+                            }
+                            SortType.RECENT -> {
+                                it.filter { bookmark -> bookmark.comment.isNotEmpty() }
+                                    .sortedByDescending { bookmark -> bookmark.timeStamp }
+                            }
+                        }
                     }
-                    SortType.RECENT -> {
-                        bookmarkList
-                            .filter { bookmark -> bookmark.comment.isNotEmpty() }
-                            .sortedByDescending { bookmark -> bookmark.timeStamp }
-                    }
-                }
-
-                _bookmarks.value = sortedBookmarks
-                _isLoading.value = false
                 isAlreadyLoaded = true
-
-            }, {
+            } catch (e: Throwable) {
+                // TODO エラー処理を記述する
+            } finally {
                 _isLoading.value = false
-            })
-            .addTo(disposable)
+            }
+        }
     }
 }
