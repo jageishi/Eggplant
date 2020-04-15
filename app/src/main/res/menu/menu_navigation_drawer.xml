@@ -6,4 +6,8 @@
         android:icon="@drawable/ic_settings_black_24dp"
         android:title="@string/title_navigation_drawer_settings" />
 
+    <item
+        android:id="@+id/login"
+        android:icon="@drawable/ic_account_circle_black_24dp"
+        android:title="@string/title_navigation_drawer_login" />
 </menu>

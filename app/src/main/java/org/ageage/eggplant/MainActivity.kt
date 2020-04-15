@@ -11,6 +11,7 @@ import androidx.fragment.app.commit
 import kotlinx.android.synthetic.main.activity_main.*
 import org.ageage.eggplant.common.enums.Mode
 import org.ageage.eggplant.feed.FeedFragment
+import org.ageage.eggplant.login.LoginActivity
 import org.ageage.eggplant.search.SearchActivity
 import org.ageage.eggplant.settings.SettingActivity
 
@@ -72,6 +73,9 @@ class MainActivity : AppCompatActivity() {
             when (it.itemId) {
                 R.id.settings -> {
                     startActivity(Intent(this, SettingActivity::class.java))
+                }
+                R.id.login -> {
+                    startActivity(Intent(this, LoginActivity::class.java))
                 }
             }
 
