@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import org.ageage.eggplant.common.enums.SortType
 import org.ageage.eggplant.common.model.Bookmark
@@ -30,11 +31,12 @@ class BookmarksViewModel(
             return
         }
 
+
         viewModelScope.launch {
             _isLoading.value = true
             try {
-                _bookmarks.value =
-                    repository.fetchBookmarks(url).let {
+                repository.fetchBookmarks(url).collect {
+                    _bookmarks.value =
                         when (sortType) {
                             SortType.POPULAR -> {
                                 it.filter { bookmark -> bookmark.comment.isNotEmpty() }
@@ -46,7 +48,7 @@ class BookmarksViewModel(
                                     .sortedByDescending { bookmark -> bookmark.timeStamp }
                             }
                         }
-                    }
+                }
                 isAlreadyLoaded = true
             } catch (e: Throwable) {
                 // TODO エラー処理を記述する

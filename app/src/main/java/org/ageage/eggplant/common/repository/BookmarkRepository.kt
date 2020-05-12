@@ -1,6 +1,7 @@
 package org.ageage.eggplant.common.repository
 
 import android.text.format.DateFormat
+import kotlinx.coroutines.flow.*
 import org.ageage.eggplant.common.api.BookmarkService
 import org.ageage.eggplant.common.api.Client
 import org.ageage.eggplant.common.api.response.mapper.toBookmarks
@@ -11,18 +12,19 @@ import java.util.*
 
 class BookmarkRepository {
 
-    suspend fun fetchBookmarks(url: String): List<Bookmark> {
+    fun fetchBookmarks(url: String): Flow<List<Bookmark>> {
         val service =
             Client.retrofitClient(Endpoint.HATENA_BOOKMARK)
                 .create(BookmarkService::class.java)
 
         return service.bookmarkEntry(url)
-            .let { bookmarkEntry ->
+            .flatMapConcat { bookmarkEntry ->
                 bookmarkEntry.bookmarkResponses
+                    .asFlow()
                     .filter {
                         it.comment.isNotEmpty()
                     }
-                    .map { bookmark ->
+                    .flatMapConcat { bookmark ->
                         val timestamp =
                             DateFormat.format(
                                 "yyyyMMdd",
@@ -36,17 +38,17 @@ class BookmarkRepository {
                             .create(BookmarkService::class.java)
                             .startCount("${Endpoint.HATENA_BOOKMARK.url}/${bookmark.user}/${timestamp}#bookmark-${bookmarkEntry.eid}")
                     }
-                    .let { responses ->
+                    .map { responses ->
                         bookmarkEntry.bookmarkResponses
                             .filter {
                                 it.comment.isNotEmpty()
                             }
                             .forEachIndexed { index, bookmarkResponse ->
+
                                 bookmarkResponse.entry = responses[index].entries.elementAtOrNull(0)
                             }
                         bookmarkEntry.bookmarkResponses.toBookmarks()
                     }
             }
     }
-
 }
