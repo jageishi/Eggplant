@@ -2,7 +2,7 @@ package org.ageage.eggplant.search
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import org.ageage.eggplant.common.repository.FeedRepository
+import org.ageage.eggplant.data.repository.FeedRepository
 
 class SearchResultViewModelFactory : ViewModelProvider.Factory {
 

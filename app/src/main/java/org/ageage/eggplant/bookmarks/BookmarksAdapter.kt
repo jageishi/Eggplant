@@ -8,13 +8,12 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import org.ageage.eggplant.R
-import org.ageage.eggplant.common.model.Bookmark
 import org.ageage.eggplant.databinding.ItemBookmarkBinding
 import java.text.SimpleDateFormat
 import java.util.*
 
 class BookmarksAdapter(
-    private val bookmarks: List<Bookmark>
+    private val bookmarks: List<org.ageage.eggplant.data.repository.model.Bookmark>
 ) : RecyclerView.Adapter<BookmarksHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BookmarksHolder {

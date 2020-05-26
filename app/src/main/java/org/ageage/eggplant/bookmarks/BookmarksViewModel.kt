@@ -4,11 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.rxkotlin.addTo
 import org.ageage.eggplant.common.enums.SortType
-import org.ageage.eggplant.common.model.Bookmark
-import org.ageage.eggplant.common.repository.BookmarkRepository
 import org.ageage.eggplant.common.schedulerprovider.BaseSchedulerProvider
+import org.ageage.eggplant.data.repository.BookmarkRepository
 
 class BookmarksViewModel(
     private val repository: BookmarkRepository,
@@ -21,8 +19,9 @@ class BookmarksViewModel(
     val isLoading: MutableLiveData<Boolean>
         get() = _isLoading
 
-    private val _bookmarks = MutableLiveData<List<Bookmark>>()
-    val bookmarks: LiveData<List<Bookmark>>
+    private val _bookmarks =
+        MutableLiveData<List<org.ageage.eggplant.data.repository.model.Bookmark>>()
+    val bookmarks: LiveData<List<org.ageage.eggplant.data.repository.model.Bookmark>>
         get() = _bookmarks
 
     private var isAlreadyLoaded = false

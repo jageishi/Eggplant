@@ -2,12 +2,12 @@ package org.ageage.eggplant.search
 
 import androidx.lifecycle.*
 import kotlinx.coroutines.launch
-import org.ageage.eggplant.common.api.response.Item
 import org.ageage.eggplant.common.enums.MinimumBookmarkCount
 import org.ageage.eggplant.common.enums.SearchTarget
 import org.ageage.eggplant.common.enums.SortType
 import org.ageage.eggplant.common.model.SearchFilterOption
-import org.ageage.eggplant.common.repository.FeedRepository
+import org.ageage.eggplant.data.api.response.Item
+import org.ageage.eggplant.data.repository.FeedRepository
 
 class SearchResultViewModel(
     private val repository: FeedRepository

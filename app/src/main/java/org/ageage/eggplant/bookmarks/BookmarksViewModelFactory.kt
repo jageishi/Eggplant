@@ -2,8 +2,8 @@ package org.ageage.eggplant.bookmarks
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import org.ageage.eggplant.common.repository.BookmarkRepository
 import org.ageage.eggplant.common.schedulerprovider.SchedulerProvider
+import org.ageage.eggplant.data.repository.BookmarkRepository
 
 class BookmarksViewModelFactory : ViewModelProvider.Factory {
 

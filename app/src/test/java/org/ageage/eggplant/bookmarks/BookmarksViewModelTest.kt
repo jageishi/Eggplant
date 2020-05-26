@@ -5,9 +5,8 @@ import androidx.lifecycle.Observer
 import com.nhaarman.mockitokotlin2.*
 import io.reactivex.Observable
 import org.ageage.eggplant.common.enums.SortType
-import org.ageage.eggplant.common.model.Bookmark
-import org.ageage.eggplant.common.repository.BookmarkRepository
 import org.ageage.eggplant.common.schedulerprovider.TrampolineSchedulerProvider
+import org.ageage.eggplant.data.repository.BookmarkRepository
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Before
@@ -24,7 +23,7 @@ class BookmarksViewModelTest {
     var instantTaskExecutorRule = InstantTaskExecutorRule()
 
     @Mock
-    private lateinit var bookmarksObserver: Observer<List<Bookmark>>
+    private lateinit var bookmarksObserver: Observer<List<org.ageage.eggplant.data.repository.model.Bookmark>>
 
     @Mock
     private lateinit var loadingObserver: Observer<Boolean>
@@ -133,7 +132,7 @@ class BookmarksViewModelTest {
 
         val fakeBookmarks =
             (1..100).map {
-                Bookmark(
+                org.ageage.eggplant.data.repository.model.Bookmark(
                     "user$it",
                     emptyList(),
                     SimpleDateFormat(
