@@ -4,10 +4,8 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
 import com.nhaarman.mockitokotlin2.*
 import io.reactivex.Observable
-import org.ageage.eggplant.common.enums.SortType
-import org.ageage.eggplant.common.model.Bookmark
-import org.ageage.eggplant.common.repository.BookmarkRepository
 import org.ageage.eggplant.common.schedulerprovider.TrampolineSchedulerProvider
+import org.ageage.eggplant.repository.enums.SortType
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Before
@@ -24,7 +22,7 @@ class BookmarksViewModelTest {
     var instantTaskExecutorRule = InstantTaskExecutorRule()
 
     @Mock
-    private lateinit var bookmarksObserver: Observer<List<Bookmark>>
+    private lateinit var bookmarksObserver: Observer<List<org.ageage.eggplant.repository.model.Bookmark>>
 
     @Mock
     private lateinit var loadingObserver: Observer<Boolean>
@@ -38,7 +36,7 @@ class BookmarksViewModelTest {
 
     @Test
     fun loodBookmarks_onSuccess_popular() {
-        val mockRepository = mock<BookmarkRepository> {
+        val mockRepository = mock<org.ageage.eggplant.repository.BookmarkRepository> {
             on { fetchBookmarks(url) } doReturn Observable.just(fakeBookmarks)
         }
 
@@ -49,7 +47,7 @@ class BookmarksViewModelTest {
         viewModel.bookmarks.observeForever(bookmarksObserver)
         viewModel.isLoading.observeForever(loadingObserver)
 
-        viewModel.loadBookmarks(url, SortType.POPULAR)
+        viewModel.loadBookmarks(url, org.ageage.eggplant.repository.enums.SortType.POPULAR)
 
         orderedVerifier.verify(loadingObserver, times(1)).onChanged(true)
         orderedVerifier.verify(bookmarksObserver, times(1)).onChanged(any())
@@ -60,7 +58,7 @@ class BookmarksViewModelTest {
 
     @Test
     fun loadBookmarks_onSuccess_recent() {
-        val mockRepository = mock<BookmarkRepository> {
+        val mockRepository = mock<org.ageage.eggplant.repository.BookmarkRepository> {
             on { fetchBookmarks(url) } doReturn Observable.just(fakeBookmarks)
         }
 
@@ -71,7 +69,7 @@ class BookmarksViewModelTest {
         viewModel.bookmarks.observeForever(bookmarksObserver)
         viewModel.isLoading.observeForever(loadingObserver)
 
-        viewModel.loadBookmarks(url, SortType.RECENT)
+        viewModel.loadBookmarks(url, org.ageage.eggplant.repository.enums.SortType.RECENT)
 
         orderedVerifier.verify(loadingObserver, times(1)).onChanged(true)
         orderedVerifier.verify(bookmarksObserver, times(1)).onChanged(any())
@@ -82,7 +80,7 @@ class BookmarksViewModelTest {
 
     @Test
     fun loadBookmarks_onError() {
-        val mockRepository = mock<BookmarkRepository> {
+        val mockRepository = mock<org.ageage.eggplant.repository.BookmarkRepository> {
             on { fetchBookmarks(url) } doReturn Observable.error(Throwable())
         }
 
@@ -93,7 +91,7 @@ class BookmarksViewModelTest {
         viewModel.bookmarks.observeForever(bookmarksObserver)
         viewModel.isLoading.observeForever(loadingObserver)
 
-        viewModel.loadBookmarks(url, SortType.POPULAR)
+        viewModel.loadBookmarks(url, org.ageage.eggplant.repository.enums.SortType.POPULAR)
 
         orderedVerifier.verify(loadingObserver, times(1)).onChanged(true)
         orderedVerifier.verify(bookmarksObserver, never()).onChanged(any())
@@ -102,14 +100,14 @@ class BookmarksViewModelTest {
 
     @Test
     fun loadBookmarks_twice() {
-        val mockRepository = mock<BookmarkRepository> {
+        val mockRepository = mock<org.ageage.eggplant.repository.BookmarkRepository> {
             on { fetchBookmarks(url) } doReturn Observable.just(fakeBookmarks)
         }
 
         val viewModel = BookmarksViewModel(mockRepository, TrampolineSchedulerProvider())
 
-        viewModel.loadBookmarks(url, SortType.POPULAR)
-        viewModel.loadBookmarks(url, SortType.POPULAR)
+        viewModel.loadBookmarks(url, org.ageage.eggplant.repository.enums.SortType.POPULAR)
+        viewModel.loadBookmarks(url, org.ageage.eggplant.repository.enums.SortType.POPULAR)
 
         verify(mockRepository, times(1)).fetchBookmarks(url)
     }
@@ -117,14 +115,14 @@ class BookmarksViewModelTest {
 
     @Test
     fun loadBookmarks_twice_forcibly() {
-        val mockRepository = mock<BookmarkRepository> {
+        val mockRepository = mock<org.ageage.eggplant.repository.BookmarkRepository> {
             on { fetchBookmarks(url) } doReturn Observable.just(fakeBookmarks)
         }
 
         val viewModel = BookmarksViewModel(mockRepository, TrampolineSchedulerProvider())
 
-        viewModel.loadBookmarks(url, SortType.POPULAR)
-        viewModel.loadBookmarks(url, SortType.POPULAR, true)
+        viewModel.loadBookmarks(url, org.ageage.eggplant.repository.enums.SortType.POPULAR)
+        viewModel.loadBookmarks(url, org.ageage.eggplant.repository.enums.SortType.POPULAR, true)
 
         verify(mockRepository, times(2)).fetchBookmarks(url)
     }
@@ -133,7 +131,7 @@ class BookmarksViewModelTest {
 
         val fakeBookmarks =
             (1..100).map {
-                Bookmark(
+                org.ageage.eggplant.repository.model.Bookmark(
                     "user$it",
                     emptyList(),
                     SimpleDateFormat(

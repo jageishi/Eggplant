@@ -7,19 +7,17 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import kotlinx.android.synthetic.main.fragment_feed.*
 import org.ageage.eggplant.R
-import org.ageage.eggplant.common.enums.Category
-import org.ageage.eggplant.common.enums.Mode
 
 private const val MODE = "mode"
 
 class FeedFragment : Fragment() {
 
-    private lateinit var mode: Mode
+    private lateinit var mode: org.ageage.eggplant.repository.enums.Mode
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            mode = it.getSerializable(MODE) as Mode
+            mode = it.getSerializable(MODE) as org.ageage.eggplant.repository.enums.Mode
         }
     }
 
@@ -34,14 +32,15 @@ class FeedFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val adapter = FeedCategoryPagerAdapter(childFragmentManager, context)
-        Category.values().forEach { adapter.addContent(mode, it) }
+        org.ageage.eggplant.repository.enums.Category.values()
+            .forEach { adapter.addContent(mode, it) }
         categoryViewPager.adapter = adapter
         categoryTab.setupWithViewPager(categoryViewPager)
     }
 
     companion object {
         @JvmStatic
-        fun newInstance(mode: Mode) =
+        fun newInstance(mode: org.ageage.eggplant.repository.enums.Mode) =
             FeedFragment().also { f ->
                 f.arguments = Bundle().also { b ->
                     b.putSerializable(MODE, mode)

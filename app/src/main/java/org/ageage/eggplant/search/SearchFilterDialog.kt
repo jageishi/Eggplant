@@ -11,31 +11,27 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import kotlinx.android.synthetic.main.search_filter_dialog.view.*
 import org.ageage.eggplant.R
-import org.ageage.eggplant.common.enums.MinimumBookmarkCount
-import org.ageage.eggplant.common.enums.SearchTarget
-import org.ageage.eggplant.common.enums.SortType
-import org.ageage.eggplant.common.model.SearchFilterOption
 import org.ageage.eggplant.common.ui.arrayadapter.EnumSpinnerAdapter
 
 private const val DEFAULT_SEARCH_FILTER_OPTION = "default_search_filter_option"
 
 class SearchFilterDialog : DialogFragment() {
 
-    private lateinit var sortType: SortType
-    private lateinit var searchTarget: SearchTarget
-    private lateinit var minimumBookmarkCount: MinimumBookmarkCount
+    private lateinit var sortType: org.ageage.eggplant.repository.enums.SortType
+    private lateinit var searchTarget: org.ageage.eggplant.repository.enums.SearchTarget
+    private lateinit var minimumBookmarkCount: org.ageage.eggplant.repository.enums.MinimumBookmarkCount
     private var isSafeSearchEnabled = true
 
     interface NoticeDialogListener {
         fun onDialogPositiveClick(
-            searchFilterOption: SearchFilterOption
+            searchFilterOption: org.ageage.eggplant.repository.model.SearchFilterOption
         )
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let { b ->
-            (b.getSerializable(DEFAULT_SEARCH_FILTER_OPTION) as SearchFilterOption).let {
+            (b.getSerializable(DEFAULT_SEARCH_FILTER_OPTION) as org.ageage.eggplant.repository.model.SearchFilterOption).let {
                 sortType = it.sortType
                 searchTarget = it.target
                 minimumBookmarkCount = it.minimumBookmarkCount
@@ -53,7 +49,7 @@ class SearchFilterDialog : DialogFragment() {
                 .setPositiveButton(R.string.search_filter_dialog_button_apply) { dialog, id ->
                     if (targetFragment is NoticeDialogListener) {
                         (targetFragment as NoticeDialogListener).onDialogPositiveClick(
-                            SearchFilterOption(
+                            org.ageage.eggplant.repository.model.SearchFilterOption(
                                 sortType,
                                 searchTarget,
                                 minimumBookmarkCount,
@@ -75,7 +71,7 @@ class SearchFilterDialog : DialogFragment() {
             .also { view ->
                 EnumSpinnerAdapter(
                     activity,
-                    SortType.valuesForDisplayed()
+                    org.ageage.eggplant.repository.enums.SortType.valuesForDisplayed()
                 ).let { adapter ->
                     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                     view.spinnerSort.adapter = adapter
@@ -93,7 +89,8 @@ class SearchFilterDialog : DialogFragment() {
                                 id: Long
                             ) {
                                 parent?.let {
-                                    sortType = it.getItemAtPosition(position) as SortType
+                                    sortType =
+                                        it.getItemAtPosition(position) as org.ageage.eggplant.repository.enums.SortType
                                 }
                             }
                         }
@@ -101,7 +98,7 @@ class SearchFilterDialog : DialogFragment() {
 
                 EnumSpinnerAdapter(
                     activity,
-                    SearchTarget.valuesForDisplayed()
+                    org.ageage.eggplant.repository.enums.SearchTarget.valuesForDisplayed()
                 ).let { adapter ->
                     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                     view.spinnerTarget.adapter = adapter
@@ -119,14 +116,14 @@ class SearchFilterDialog : DialogFragment() {
                                 id: Long
                             ) {
                                 searchTarget =
-                                    parent?.getItemAtPosition(position) as SearchTarget
+                                    parent?.getItemAtPosition(position) as org.ageage.eggplant.repository.enums.SearchTarget
                             }
                         }
                 }
 
                 EnumSpinnerAdapter(
                     activity,
-                    MinimumBookmarkCount.valuesForDisplayed()
+                    org.ageage.eggplant.repository.enums.MinimumBookmarkCount.valuesForDisplayed()
                 ).let { adapter ->
                     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                     view.spinnerBookmarkCount.adapter = adapter
@@ -144,7 +141,7 @@ class SearchFilterDialog : DialogFragment() {
                                 id: Long
                             ) {
                                 minimumBookmarkCount =
-                                    parent?.getItemAtPosition(position) as MinimumBookmarkCount
+                                    parent?.getItemAtPosition(position) as org.ageage.eggplant.repository.enums.MinimumBookmarkCount
                             }
                         }
                 }
@@ -161,7 +158,7 @@ class SearchFilterDialog : DialogFragment() {
         fun newInstance(
             target: Fragment,
             requestCode: Int,
-            defaultSearchFilterOption: SearchFilterOption
+            defaultSearchFilterOption: org.ageage.eggplant.repository.model.SearchFilterOption
         ) =
             SearchFilterDialog().also { f ->
                 f.setTargetFragment(target, requestCode)

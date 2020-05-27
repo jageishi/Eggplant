@@ -16,11 +16,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.fragment_feed_items.*
 import org.ageage.eggplant.R
 import org.ageage.eggplant.bookmarks.BookmarksActivity
-import org.ageage.eggplant.common.api.response.Item
-import org.ageage.eggplant.common.enums.Category
-import org.ageage.eggplant.common.enums.Mode
 import org.ageage.eggplant.common.ui.adapter.FeedItemAdapter
 import org.ageage.eggplant.databinding.FragmentFeedItemsBinding
+import org.ageage.eggplant.repository.api.response.Item
 
 private const val MODE = "mode"
 private const val CATEGORY = "category"
@@ -30,14 +28,14 @@ class FeedItemsFragment : Fragment(), FeedItemAdapter.OnClickListener {
     private val viewModel: FeedItemsViewModel by viewModels { FeedItemsViewModelFactory() }
     private lateinit var feedItemAdapter: FeedItemAdapter
     private lateinit var binding: FragmentFeedItemsBinding
-    private lateinit var category: Category
-    private lateinit var mode: Mode
+    private lateinit var category: org.ageage.eggplant.repository.enums.Category
+    private lateinit var mode: org.ageage.eggplant.repository.enums.Mode
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            mode = it.getSerializable(MODE) as Mode
-            category = it.getSerializable(CATEGORY) as Category
+            mode = it.getSerializable(MODE) as org.ageage.eggplant.repository.enums.Mode
+            category = it.getSerializable(CATEGORY) as org.ageage.eggplant.repository.enums.Category
         }
         feedItemAdapter = FeedItemAdapter(requireContext(), this)
     }
@@ -94,7 +92,10 @@ class FeedItemsFragment : Fragment(), FeedItemAdapter.OnClickListener {
 
     companion object {
         @JvmStatic
-        fun newInstance(mode: Mode, category: Category) =
+        fun newInstance(
+            mode: org.ageage.eggplant.repository.enums.Mode,
+            category: org.ageage.eggplant.repository.enums.Category
+        ) =
             FeedItemsFragment().also { f ->
                 f.arguments = Bundle().also { b ->
                     b.putSerializable(MODE, mode)

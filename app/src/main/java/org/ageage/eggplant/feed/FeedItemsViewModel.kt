@@ -5,13 +5,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
-import org.ageage.eggplant.common.api.response.Item
-import org.ageage.eggplant.common.enums.Category
-import org.ageage.eggplant.common.enums.Mode
-import org.ageage.eggplant.common.repository.FeedRepository
+import org.ageage.eggplant.repository.api.response.Item
 
 class FeedItemsViewModel(
-    private val repository: FeedRepository
+    private val repository: org.ageage.eggplant.repository.FeedRepository
 ) : ViewModel() {
 
     private val _items = MutableLiveData<List<Item>>()
@@ -24,7 +21,11 @@ class FeedItemsViewModel(
 
     private var isAlreadyLoaded = false
 
-    fun loadRss(mode: Mode, category: Category, forceLoad: Boolean = false) {
+    fun loadRss(
+        mode: org.ageage.eggplant.repository.enums.Mode,
+        category: org.ageage.eggplant.repository.enums.Category,
+        forceLoad: Boolean = false
+    ) {
         if (isAlreadyLoaded && !forceLoad) {
             return
         }

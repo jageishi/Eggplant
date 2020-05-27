@@ -4,7 +4,7 @@ import android.content.Context
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import org.ageage.eggplant.R
-import org.ageage.eggplant.common.enums.SortType
+import org.ageage.eggplant.repository.enums.SortType
 
 class BookmarksSortTypePagerAdapter(
     fm: FragmentManager,
@@ -20,12 +20,12 @@ class BookmarksSortTypePagerAdapter(
 
     override fun getPageTitle(position: Int) = pageTitles[position]
 
-    fun addContent(sortType: SortType, url: String) {
+    fun addContent(sortType: org.ageage.eggplant.repository.enums.SortType, url: String) {
         contents.add(BookmarksFragment.newInstance(sortType, url))
         pageTitles.add(
             when (sortType) {
-                SortType.POPULAR -> context.getString(R.string.sort_type_title_popular)
-                SortType.RECENT -> context.getString(R.string.sort_type_title_recent)
+                org.ageage.eggplant.repository.enums.SortType.POPULAR -> context.getString(R.string.sort_type_title_popular)
+                org.ageage.eggplant.repository.enums.SortType.RECENT -> context.getString(R.string.sort_type_title_recent)
             }
         )
     }

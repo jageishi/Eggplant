@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.fragment_bookmarks.*
 import org.ageage.eggplant.R
-import org.ageage.eggplant.common.enums.SortType
 import org.ageage.eggplant.databinding.FragmentBookmarksBinding
 
 private const val SORT_TYPE = "sort_type"
@@ -22,13 +21,14 @@ class BookmarksFragment : Fragment() {
 
     private val viewModel: BookmarksViewModel by viewModels { BookmarksViewModelFactory() }
     private lateinit var binding: FragmentBookmarksBinding
-    private lateinit var sortType: SortType
+    private lateinit var sortType: org.ageage.eggplant.repository.enums.SortType
     private lateinit var url: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            sortType = it.getSerializable(SORT_TYPE) as SortType
+            sortType =
+                it.getSerializable(SORT_TYPE) as org.ageage.eggplant.repository.enums.SortType
             url = it.getString(URL) ?: ""
         }
     }
@@ -78,7 +78,7 @@ class BookmarksFragment : Fragment() {
 
     companion object {
         @JvmStatic
-        fun newInstance(sortType: SortType, url: String) =
+        fun newInstance(sortType: org.ageage.eggplant.repository.enums.SortType, url: String) =
             BookmarksFragment().also { f ->
                 f.arguments = Bundle().also { b ->
                     b.putSerializable(SORT_TYPE, sortType)

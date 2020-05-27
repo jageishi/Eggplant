@@ -7,10 +7,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.setMain
-import org.ageage.eggplant.common.api.response.Item
-import org.ageage.eggplant.common.enums.Category
-import org.ageage.eggplant.common.enums.Mode
-import org.ageage.eggplant.common.repository.FeedRepository
+import org.ageage.eggplant.repository.api.response.Item
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
@@ -29,8 +26,8 @@ class FeedItemsViewModelTest {
     @Mock
     private lateinit var loadingObserver: Observer<Boolean>
 
-    private val mode = Mode.ENTRY_LIST
-    private val category = Category.OVERALL
+    private val mode = org.ageage.eggplant.repository.enums.Mode.ENTRY_LIST
+    private val category = org.ageage.eggplant.repository.enums.Category.OVERALL
 
     @Before
     fun setUp() {
@@ -46,7 +43,7 @@ class FeedItemsViewModelTest {
     @Test
     fun loadRss_onSuccess() {
         runBlocking {
-            val mockRepository = mock<FeedRepository> {
+            val mockRepository = mock<org.ageage.eggplant.repository.FeedRepository> {
                 onBlocking { fetchRss(mode, category) } doReturn fakeItems
             }
 
@@ -68,7 +65,7 @@ class FeedItemsViewModelTest {
     @Test
     fun loadRss_onError() {
         runBlocking {
-            val mockRepository = mock<FeedRepository> {
+            val mockRepository = mock<org.ageage.eggplant.repository.FeedRepository> {
                 onBlocking { fetchRss(mode, category) } doThrow RuntimeException()
             }
 
@@ -90,7 +87,7 @@ class FeedItemsViewModelTest {
     @Test
     fun loadRss_twice() {
         runBlocking {
-            val mockRepository = mock<FeedRepository> {
+            val mockRepository = mock<org.ageage.eggplant.repository.FeedRepository> {
                 onBlocking { fetchRss(mode, category) } doReturn fakeItems
             }
 
@@ -106,7 +103,7 @@ class FeedItemsViewModelTest {
     @Test
     fun loadRss_twice_forcibly() {
         runBlocking {
-            val mockRepository = mock<FeedRepository> {
+            val mockRepository = mock<org.ageage.eggplant.repository.FeedRepository> {
                 onBlocking { fetchRss(mode, category) } doReturn fakeItems
             }
 

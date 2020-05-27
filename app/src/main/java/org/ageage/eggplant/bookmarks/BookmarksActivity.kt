@@ -7,7 +7,7 @@ import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_bookmarks.*
 import org.ageage.eggplant.R
-import org.ageage.eggplant.common.enums.SortType
+import org.ageage.eggplant.repository.enums.SortType
 
 private const val TITLE = "title"
 private const val URL = "url"
@@ -36,7 +36,8 @@ class BookmarksActivity : AppCompatActivity() {
 
     private fun initViews() {
         val adapter = BookmarksSortTypePagerAdapter(supportFragmentManager, this)
-        SortType.values().forEach { adapter.addContent(it, url) }
+        org.ageage.eggplant.repository.enums.SortType.values()
+            .forEach { adapter.addContent(it, url) }
         viewPagerSortType.adapter = adapter
         tabLayoutSortType.setupWithViewPager(viewPagerSortType)
         supportActionBar?.let {

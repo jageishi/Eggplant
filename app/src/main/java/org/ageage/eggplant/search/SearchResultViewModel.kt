@@ -2,15 +2,13 @@ package org.ageage.eggplant.search
 
 import androidx.lifecycle.*
 import kotlinx.coroutines.launch
-import org.ageage.eggplant.common.api.response.Item
-import org.ageage.eggplant.common.enums.MinimumBookmarkCount
-import org.ageage.eggplant.common.enums.SearchTarget
-import org.ageage.eggplant.common.enums.SortType
-import org.ageage.eggplant.common.model.SearchFilterOption
-import org.ageage.eggplant.common.repository.FeedRepository
+import org.ageage.eggplant.repository.api.response.Item
+import org.ageage.eggplant.repository.enums.MinimumBookmarkCount
+import org.ageage.eggplant.repository.enums.SearchTarget
+import org.ageage.eggplant.repository.enums.SortType
 
 class SearchResultViewModel(
-    private val repository: FeedRepository
+    private val repository: org.ageage.eggplant.repository.FeedRepository
 ) : ViewModel() {
 
     private val _items = MutableLiveData<List<Item>>()
@@ -39,10 +37,10 @@ class SearchResultViewModel(
 
     var keyword: String = ""
 
-    var searchFilterOption = SearchFilterOption(
-        SortType.RECENT,
-        SearchTarget.TEXT,
-        MinimumBookmarkCount.ONE,
+    var searchFilterOption = org.ageage.eggplant.repository.model.SearchFilterOption(
+        org.ageage.eggplant.repository.enums.SortType.RECENT,
+        org.ageage.eggplant.repository.enums.SearchTarget.TEXT,
+        org.ageage.eggplant.repository.enums.MinimumBookmarkCount.ONE,
         true
     )
 

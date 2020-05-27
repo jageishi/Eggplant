@@ -9,7 +9,6 @@ import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import kotlinx.android.synthetic.main.activity_main.*
-import org.ageage.eggplant.common.enums.Mode
 import org.ageage.eggplant.feed.FeedFragment
 import org.ageage.eggplant.search.SearchActivity
 import org.ageage.eggplant.settings.SettingActivity
@@ -98,7 +97,7 @@ class MainActivity : AppCompatActivity() {
         "feed_popular".also { tag ->
             feedFragmentPopular =
                 supportFragmentManager.findFragmentByTag(tag) as FeedFragment?
-                    ?: FeedFragment.newInstance(Mode.HOT_ENTRY).also {
+                    ?: FeedFragment.newInstance(org.ageage.eggplant.repository.enums.Mode.HOT_ENTRY).also {
                         supportFragmentManager.commit {
                             add(R.id.mainContentView, it, tag)
                         }
@@ -108,7 +107,7 @@ class MainActivity : AppCompatActivity() {
         "feed_recent".also { tag ->
             feedFragmentRecent =
                 supportFragmentManager.findFragmentByTag(tag) as FeedFragment?
-                    ?: FeedFragment.newInstance(Mode.ENTRY_LIST).also {
+                    ?: FeedFragment.newInstance(org.ageage.eggplant.repository.enums.Mode.ENTRY_LIST).also {
                         supportFragmentManager.commit {
                             add(R.id.mainContentView, it, tag)
                             hide(it)

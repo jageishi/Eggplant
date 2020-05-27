@@ -5,10 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.addTo
-import org.ageage.eggplant.common.enums.SortType
-import org.ageage.eggplant.common.model.Bookmark
-import org.ageage.eggplant.common.repository.BookmarkRepository
 import org.ageage.eggplant.common.schedulerprovider.BaseSchedulerProvider
+import org.ageage.eggplant.repository.BookmarkRepository
 
 class BookmarksViewModel(
     private val repository: BookmarkRepository,
@@ -21,8 +19,8 @@ class BookmarksViewModel(
     val isLoading: MutableLiveData<Boolean>
         get() = _isLoading
 
-    private val _bookmarks = MutableLiveData<List<Bookmark>>()
-    val bookmarks: LiveData<List<Bookmark>>
+    private val _bookmarks = MutableLiveData<List<org.ageage.eggplant.repository.model.Bookmark>>()
+    val bookmarks: LiveData<List<org.ageage.eggplant.repository.model.Bookmark>>
         get() = _bookmarks
 
     private var isAlreadyLoaded = false
@@ -32,7 +30,11 @@ class BookmarksViewModel(
         disposable.clear()
     }
 
-    fun loadBookmarks(url: String, sortType: SortType, forceLoad: Boolean = false) {
+    fun loadBookmarks(
+        url: String,
+        sortType: org.ageage.eggplant.repository.enums.SortType,
+        forceLoad: Boolean = false
+    ) {
         if (isAlreadyLoaded && !forceLoad) {
             return
         }
@@ -44,13 +46,13 @@ class BookmarksViewModel(
             .observeOn(schedulerProvider.ui())
             .subscribe({ bookmarkList ->
                 val sortedBookmarks = when (sortType) {
-                    SortType.POPULAR -> {
+                    org.ageage.eggplant.repository.enums.SortType.POPULAR -> {
                         bookmarkList
                             .filter { bookmark -> bookmark.comment.isNotEmpty() }
                             .sortedByDescending { bookmark -> bookmark.yellowStarNumber }
                             .take(10)
                     }
-                    SortType.RECENT -> {
+                    org.ageage.eggplant.repository.enums.SortType.RECENT -> {
                         bookmarkList
                             .filter { bookmark -> bookmark.comment.isNotEmpty() }
                             .sortedByDescending { bookmark -> bookmark.timeStamp }

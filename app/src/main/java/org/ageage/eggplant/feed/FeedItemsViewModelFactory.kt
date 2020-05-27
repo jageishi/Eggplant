@@ -2,7 +2,6 @@ package org.ageage.eggplant.feed
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import org.ageage.eggplant.common.repository.FeedRepository
 
 class FeedItemsViewModelFactory : ViewModelProvider.Factory {
 
@@ -13,7 +12,7 @@ class FeedItemsViewModelFactory : ViewModelProvider.Factory {
         }
 
         return FeedItemsViewModel(
-            FeedRepository()
+            org.ageage.eggplant.repository.FeedRepository()
         ) as T
     }
 }

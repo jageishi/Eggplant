@@ -7,12 +7,10 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.setMain
-import org.ageage.eggplant.common.api.response.Item
-import org.ageage.eggplant.common.enums.MinimumBookmarkCount
-import org.ageage.eggplant.common.enums.SearchTarget
-import org.ageage.eggplant.common.enums.SortType
-import org.ageage.eggplant.common.model.SearchFilterOption
-import org.ageage.eggplant.common.repository.FeedRepository
+import org.ageage.eggplant.repository.api.response.Item
+import org.ageage.eggplant.repository.enums.MinimumBookmarkCount
+import org.ageage.eggplant.repository.enums.SearchTarget
+import org.ageage.eggplant.repository.enums.SortType
 import org.assertj.core.api.AssertionsForClassTypes.assertThat
 import org.junit.After
 import org.junit.Before
@@ -35,10 +33,10 @@ class SearchResultViewModelTest {
     @Mock
     private lateinit var emptyItemsObserver: Observer<Boolean>
 
-    private var defaultSearchFilterOption = SearchFilterOption(
-        SortType.RECENT,
-        SearchTarget.TEXT,
-        MinimumBookmarkCount.ONE,
+    private var defaultSearchFilterOption = org.ageage.eggplant.repository.model.SearchFilterOption(
+        org.ageage.eggplant.repository.enums.SortType.RECENT,
+        org.ageage.eggplant.repository.enums.SearchTarget.TEXT,
+        org.ageage.eggplant.repository.enums.MinimumBookmarkCount.ONE,
         true
     )
 
@@ -56,7 +54,7 @@ class SearchResultViewModelTest {
     @Test
     fun search_onSuccess() {
         runBlocking {
-            val mockRepository = mock<FeedRepository> {
+            val mockRepository = mock<org.ageage.eggplant.repository.FeedRepository> {
                 onBlocking { search("", defaultSearchFilterOption, 1) } doReturn fakeItems
             }
             val viewModel = SearchResultViewModel(mockRepository)
@@ -83,7 +81,7 @@ class SearchResultViewModelTest {
     fun search_onError() {
         runBlocking {
             val exception = RuntimeException()
-            val mockRepository = mock<FeedRepository> {
+            val mockRepository = mock<org.ageage.eggplant.repository.FeedRepository> {
                 onBlocking { search("", defaultSearchFilterOption, 1) } doThrow exception
             }
             val viewModel = SearchResultViewModel(mockRepository)
@@ -108,7 +106,7 @@ class SearchResultViewModelTest {
     @Test
     fun search_emptyItem() {
         runBlocking {
-            val mockRepository = mock<FeedRepository> {
+            val mockRepository = mock<org.ageage.eggplant.repository.FeedRepository> {
                 onBlocking { search("", defaultSearchFilterOption, 1) } doReturn listOf()
             }
             val viewModel = SearchResultViewModel(mockRepository)
@@ -125,7 +123,7 @@ class SearchResultViewModelTest {
     @Test
     fun search_twice() {
         runBlocking {
-            val mockRepository = mock<FeedRepository> {
+            val mockRepository = mock<org.ageage.eggplant.repository.FeedRepository> {
                 onBlocking { search("", defaultSearchFilterOption, 1) } doReturn fakeItems
             }
             val viewModel = SearchResultViewModel(mockRepository)
@@ -141,7 +139,7 @@ class SearchResultViewModelTest {
     @Test
     fun search_twice_forcibly() {
         runBlocking {
-            val mockRepository = mock<FeedRepository> {
+            val mockRepository = mock<org.ageage.eggplant.repository.FeedRepository> {
                 onBlocking { search("", defaultSearchFilterOption, 1) } doReturn fakeItems
             }
             val viewModel = SearchResultViewModel(mockRepository)
@@ -157,7 +155,7 @@ class SearchResultViewModelTest {
     @Test
     fun loadNextPage_onSuccess() {
         runBlocking {
-            val mockRepository = mock<FeedRepository> {
+            val mockRepository = mock<org.ageage.eggplant.repository.FeedRepository> {
                 onBlocking { search("", defaultSearchFilterOption, 2) } doReturn fakeItems
             }
             val viewModel = SearchResultViewModel(mockRepository)
@@ -197,7 +195,7 @@ class SearchResultViewModelTest {
     fun loadNextPage_onError() {
         runBlocking {
             val exception = RuntimeException()
-            val mockRepository = mock<FeedRepository> {
+            val mockRepository = mock<org.ageage.eggplant.repository.FeedRepository> {
                 onBlocking { search("", defaultSearchFilterOption, 2) } doThrow exception
             }
             val viewModel = SearchResultViewModel(mockRepository)
@@ -223,7 +221,7 @@ class SearchResultViewModelTest {
     @Test
     fun loadNextPage_emptyItems() {
         runBlocking {
-            val mockRepository = mock<FeedRepository> {
+            val mockRepository = mock<org.ageage.eggplant.repository.FeedRepository> {
                 onBlocking { search("", defaultSearchFilterOption, 2) } doReturn listOf()
             }
             val viewModel = SearchResultViewModel(mockRepository)
@@ -251,7 +249,7 @@ class SearchResultViewModelTest {
     @Test
     fun loadNextPage_twice() {
         runBlocking {
-            val mockRepository = mock<FeedRepository> {
+            val mockRepository = mock<org.ageage.eggplant.repository.FeedRepository> {
                 onBlocking { search("", defaultSearchFilterOption, 2) } doReturn fakeItems
                 onBlocking { search("", defaultSearchFilterOption, 3) } doReturn fakeItems
             }
@@ -272,7 +270,7 @@ class SearchResultViewModelTest {
     @Test
     fun search_afterLoadNextPage() {
         runBlocking {
-            val mockRepository = mock<FeedRepository> {
+            val mockRepository = mock<org.ageage.eggplant.repository.FeedRepository> {
                 onBlocking { search("", defaultSearchFilterOption, 1) } doReturn fakeItems
                 onBlocking { search("", defaultSearchFilterOption, 2) } doReturn fakeItems
             }
@@ -293,7 +291,7 @@ class SearchResultViewModelTest {
     @Test
     fun loadNextPage_afterSearch() {
         runBlocking {
-            val mockRepository = mock<FeedRepository> {
+            val mockRepository = mock<org.ageage.eggplant.repository.FeedRepository> {
                 onBlocking { search("", defaultSearchFilterOption, 1) } doReturn fakeItems
                 onBlocking { search("", defaultSearchFilterOption, 2) } doReturn fakeItems
             }

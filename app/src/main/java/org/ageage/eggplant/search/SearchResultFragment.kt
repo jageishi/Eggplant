@@ -17,10 +17,9 @@ import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_search_result.*
 import org.ageage.eggplant.R
 import org.ageage.eggplant.bookmarks.BookmarksActivity
-import org.ageage.eggplant.common.api.response.Item
-import org.ageage.eggplant.common.model.SearchFilterOption
 import org.ageage.eggplant.common.ui.adapter.FeedItemAdapter
 import org.ageage.eggplant.databinding.FragmentSearchResultBinding
+import org.ageage.eggplant.repository.api.response.Item
 
 private const val KEYWORD = "keyword"
 
@@ -105,7 +104,7 @@ class SearchResultFragment : Fragment(), FeedItemAdapter.OnClickListener,
     }
 
     override fun onDialogPositiveClick(
-        searchFilterOption: SearchFilterOption
+        searchFilterOption: org.ageage.eggplant.repository.model.SearchFilterOption
     ) {
         viewModel.searchFilterOption = searchFilterOption
         viewModel.search(true)
