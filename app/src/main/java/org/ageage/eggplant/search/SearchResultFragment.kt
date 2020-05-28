@@ -17,9 +17,9 @@ import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_search_result.*
 import org.ageage.eggplant.R
 import org.ageage.eggplant.bookmarks.BookmarksActivity
-import org.ageage.eggplant.common.api.response.Item
 import org.ageage.eggplant.common.model.SearchFilterOption
 import org.ageage.eggplant.common.ui.adapter.FeedItemAdapter
+import org.ageage.eggplant.data.api.response.Item
 import org.ageage.eggplant.databinding.FragmentSearchResultBinding
 
 private const val KEYWORD = "keyword"

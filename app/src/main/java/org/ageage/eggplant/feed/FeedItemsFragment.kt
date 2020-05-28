@@ -16,10 +16,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.fragment_feed_items.*
 import org.ageage.eggplant.R
 import org.ageage.eggplant.bookmarks.BookmarksActivity
-import org.ageage.eggplant.common.api.response.Item
 import org.ageage.eggplant.common.enums.Category
 import org.ageage.eggplant.common.enums.Mode
 import org.ageage.eggplant.common.ui.adapter.FeedItemAdapter
+import org.ageage.eggplant.data.api.response.Item
 import org.ageage.eggplant.databinding.FragmentFeedItemsBinding
 
 private const val MODE = "mode"

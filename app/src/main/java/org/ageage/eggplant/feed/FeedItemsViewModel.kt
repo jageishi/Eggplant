@@ -5,10 +5,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
-import org.ageage.eggplant.common.api.response.Item
 import org.ageage.eggplant.common.enums.Category
 import org.ageage.eggplant.common.enums.Mode
-import org.ageage.eggplant.common.repository.FeedRepository
+import org.ageage.eggplant.data.api.response.Item
+import org.ageage.eggplant.data.repository.FeedRepository
 
 class FeedItemsViewModel(
     private val repository: FeedRepository

@@ -10,9 +10,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import okhttp3.internal.format
 import org.ageage.eggplant.R
-import org.ageage.eggplant.common.api.response.Item
 import org.ageage.eggplant.common.ui.adapter.viewholder.FeedItemHolder
 import org.ageage.eggplant.common.ui.adapter.viewholder.FeedLoadingItemHolder
+import org.ageage.eggplant.data.api.response.Item
 import org.ageage.eggplant.databinding.ItemFeedBinding
 
 class FeedItemAdapter(
