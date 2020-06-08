@@ -3,7 +3,7 @@ package org.ageage.eggplant.bookmarks
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
 import com.nhaarman.mockitokotlin2.*
-import io.reactivex.Observable
+import org.ageage.eggplant.common.TestCoroutineRule
 import org.ageage.eggplant.common.enums.SortType
 import org.ageage.eggplant.common.model.Bookmark
 import org.ageage.eggplant.common.repository.BookmarkRepository
@@ -21,7 +21,10 @@ import java.util.*
 class BookmarksViewModelTest {
 
     @get:Rule
-    var instantTaskExecutorRule = InstantTaskExecutorRule()
+    val instantTaskExecutorRule = InstantTaskExecutorRule()
+
+    @get:Rule
+    val testCoroutineRule = TestCoroutineRule()
 
     @Mock
     private lateinit var bookmarksObserver: Observer<List<Bookmark>>
@@ -37,9 +40,9 @@ class BookmarksViewModelTest {
     }
 
     @Test
-    fun loodBookmarks_onSuccess_popular() {
+    fun loodBookmarks_onSuccess_popular() = testCoroutineRule.runBlockingTest {
         val mockRepository = mock<BookmarkRepository> {
-            on { fetchBookmarks(url) } doReturn Observable.just(fakeBookmarks)
+            onBlocking { fetchBookmarks(url) } doReturn fakeBookmarks
         }
 
         val viewModel = BookmarksViewModel(mockRepository, TrampolineSchedulerProvider())
@@ -59,9 +62,9 @@ class BookmarksViewModelTest {
     }
 
     @Test
-    fun loadBookmarks_onSuccess_recent() {
+    fun loadBookmarks_onSuccess_recent() = testCoroutineRule.runBlockingTest {
         val mockRepository = mock<BookmarkRepository> {
-            on { fetchBookmarks(url) } doReturn Observable.just(fakeBookmarks)
+            onBlocking { fetchBookmarks(url) } doReturn fakeBookmarks
         }
 
         val viewModel = BookmarksViewModel(mockRepository, TrampolineSchedulerProvider())
@@ -81,9 +84,9 @@ class BookmarksViewModelTest {
     }
 
     @Test
-    fun loadBookmarks_onError() {
+    fun loadBookmarks_onError() = testCoroutineRule.runBlockingTest {
         val mockRepository = mock<BookmarkRepository> {
-            on { fetchBookmarks(url) } doReturn Observable.error(Throwable())
+            onBlocking { fetchBookmarks(url) } doThrow RuntimeException()
         }
 
         val viewModel = BookmarksViewModel(mockRepository, TrampolineSchedulerProvider())
@@ -101,9 +104,9 @@ class BookmarksViewModelTest {
     }
 
     @Test
-    fun loadBookmarks_twice() {
+    fun loadBookmarks_twice() = testCoroutineRule.runBlockingTest {
         val mockRepository = mock<BookmarkRepository> {
-            on { fetchBookmarks(url) } doReturn Observable.just(fakeBookmarks)
+            onBlocking { fetchBookmarks(url) } doReturn fakeBookmarks
         }
 
         val viewModel = BookmarksViewModel(mockRepository, TrampolineSchedulerProvider())
@@ -116,9 +119,9 @@ class BookmarksViewModelTest {
 
 
     @Test
-    fun loadBookmarks_twice_forcibly() {
+    fun loadBookmarks_twice_forcibly() = testCoroutineRule.runBlockingTest {
         val mockRepository = mock<BookmarkRepository> {
-            on { fetchBookmarks(url) } doReturn Observable.just(fakeBookmarks)
+            onBlocking { fetchBookmarks(url) } doReturn fakeBookmarks
         }
 
         val viewModel = BookmarksViewModel(mockRepository, TrampolineSchedulerProvider())
