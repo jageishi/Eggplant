@@ -1,10 +1,10 @@
 package org.ageage.eggplant.common.repository
 
 import android.text.format.DateFormat
-import io.reactivex.Observable
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.rxkotlin.toObservable
-import io.reactivex.schedulers.Schedulers
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.withContext
 import org.ageage.eggplant.common.api.BookmarkService
 import org.ageage.eggplant.common.api.Client
 import org.ageage.eggplant.common.api.response.mapper.toBookmarks
@@ -15,46 +15,48 @@ import java.util.*
 
 class BookmarkRepository {
 
-    fun fetchBookmarks(url: String): Observable<List<Bookmark>> {
+    suspend fun fetchBookmarks(url: String): List<Bookmark> {
         val service =
             Client.retrofitClient(Endpoint.HATENA_BOOKMARK)
                 .create(BookmarkService::class.java)
 
-        return service.bookmarkEntry(url)
-            .flatMap { bookmarkEntry ->
-                bookmarkEntry.bookmarkResponses.toObservable()
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(Schedulers.io())
+        val list = mutableListOf<Bookmark>()
+        withContext(Dispatchers.IO) {
+            service.bookmarkEntry(url).let { bookmarkEntry ->
+                bookmarkEntry.bookmarkResponses
                     .filter {
                         it.comment.isNotEmpty()
                     }
-                    .concatMapEager { bookmark ->
-                        val timestamp =
-                            DateFormat.format(
-                                "yyyyMMdd",
-                                SimpleDateFormat(
-                                    "yyyy/MM/dd HH:mm",
-                                    Locale.US
-                                ).parse(bookmark.timestamp)
-                            )
-                        Client.retrofitClient(Endpoint.HATENA_STAR)
-                            .create(BookmarkService::class.java)
-                            .startCount("${Endpoint.HATENA_BOOKMARK.url}/${bookmark.user}/${timestamp}#bookmark-${bookmarkEntry.eid}")
-                            .subscribeOn(Schedulers.io())
-                            .observeOn(AndroidSchedulers.mainThread())
+                    .map { bookmark ->
+                        async {
+                            val timestamp =
+                                DateFormat.format(
+                                    "yyyyMMdd",
+                                    SimpleDateFormat(
+                                        "yyyy/MM/dd HH:mm",
+                                        Locale.US
+                                    ).parse(bookmark.timestamp)
+                                )
+                            Client.retrofitClient(Endpoint.HATENA_STAR)
+                                .create(BookmarkService::class.java)
+                                .startCount("${Endpoint.HATENA_BOOKMARK.url}/${bookmark.user}/${timestamp}#bookmark-${bookmarkEntry.eid}")
+                        }
                     }
-                    .toList()
-                    .map { responses ->
+                    .awaitAll()
+                    .let { responses ->
                         bookmarkEntry.bookmarkResponses
                             .filter {
                                 it.comment.isNotEmpty()
                             }
                             .forEachIndexed { index, bookmarkResponse ->
+
                                 bookmarkResponse.entry = responses[index].entries.elementAtOrNull(0)
                             }
-                        bookmarkEntry.bookmarkResponses.toBookmarks()
+                        list.addAll(bookmarkEntry.bookmarkResponses.toBookmarks())
                     }
-                    .toObservable()
             }
+        }
+
+        return list
     }
 }
