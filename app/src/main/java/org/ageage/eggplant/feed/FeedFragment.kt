@@ -44,6 +44,5 @@ class FeedFragment : Fragment() {
     companion object {
         @JvmStatic
         fun newInstance() = FeedFragment()
-
     }
 }
