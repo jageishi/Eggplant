@@ -40,6 +40,7 @@ class FeedItemsFragment : Fragment(), FeedItemAdapter.OnClickListener {
             category = it.getSerializable(CATEGORY) as Category
         }
         feedItemAdapter = FeedItemAdapter(requireContext(), this)
+
     }
 
     override fun onCreateView(
