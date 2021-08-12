@@ -8,7 +8,16 @@ warn("PR is classed as Work in Progress") if github.pr_title.include? "[WIP]"
 # Warn when there is a big PR
 warn("Big PR") if git.lines_of_code > 500
 
-if true
-  markdown("### マークダウンです")
-  markdown("|files|densities|\n|:--|:--|\n|aaa|xxxhdpi|")
+target_files = git.modified_files + git.added_files
+message = ""
+target_files.each do |file|
+  message << "|`#{file}`|\n"
+end
+
+if !message.empty?
+  header = "#### 追加、変更されたファイル\n"
+  header << "|File|\n"
+  header << "| --- |\n"
+  message = header + message
+  markdown(message)
 end
