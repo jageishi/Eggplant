@@ -1,23 +1,3 @@
-# Sometimes it's a README fix, or something like that - which isn't relevant for
-# including in a project's CHANGELOG for example
-declared_trivial = github.pr_title.include? "#trivial"
-
-# Make it more obvious that a PR is a work in progress and shouldn't be merged yet
-warn("PR is classed as Work in Progress") if github.pr_title.include? "[WIP]"
-
-# Warn when there is a big PR
-warn("Big PR") if git.lines_of_code > 500
-
-target_files = git.added_files + git.modified_files + git.deleted_files
-message = ""
-target_files.each do |file|
-  message << "|`#{file}`|\n"
-end
-
-if !message.empty?
-  header = "#### 追加、変更、削除されたファイル\n"
-  header << "|File|\n"
-  header << "| --- |\n"
-  message = header + message
-  markdown(message)
-end
+danger.import_plugin("./test.rb")
+check_test.check
+message("メッセージだよー")
