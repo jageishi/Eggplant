@@ -1,21 +1,5 @@
-message("message-1")
-message("message-2")
-message("message-3")
-message("message")
+danger.import_plugin("test.rb")
 
-warn("warm-1")
-warn("warm-2")
-warn("warm-3")
-warn("warn")
-
-fail("fail-1")
-fail("fail-2")
-fail("fail-3")
-fail("fail")
-
-markdown("## h2")
-markdown("### h3")
-
-table_header = "|テーブル|\n| --- |\n"
-table_body = ["aaa", "bbb", "ccc"].map { |s| "| #{s} |\n"}.join
-markdown(table_header + table_body)
+image_resource_checker.target_densities = ["ldpi"]
+image_resource_checker.target_extensions = ["xml"]
+image_resource_checker.check
