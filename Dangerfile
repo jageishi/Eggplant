@@ -15,7 +15,8 @@ fail("fail", file: "Dangerfile", line: 14)
 
 markdown("## h2")
 markdown("### h3")
-
-table_header = "|テーブル|\n| --- |\n"
-table_body = ["aaa", "bbb", "ccc"].map { |s| "| #{s} |\n"}.join
-markdown(table_header + table_body)
+markdown("|テーブル|")
+markdown("| --- |")
+markdown("| aaa |")
+markdown("| bbb |")
+markdown("| ccc |")
