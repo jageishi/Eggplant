@@ -1,18 +1,17 @@
 message("message-1")
 message("message-2")
 message("message-3")
-message("message", file: "Dangerfile", line: 1)
+message("message", file: "Dangerfile", line: 4)
 
 warn("warm-1")
 warn("warm-2")
 warn("warm-3")
-warn("warn", file: "Dangerfile", line: 5)
-
+warn("warn", file: "Dangerfile", line: 9)
 
 fail("fail-1")
 fail("fail-2")
 fail("fail-3")
-fail("fail", file: "Dangerfile", line: 10)
+fail("fail", file: "Dangerfile", line: 14)
 
 markdown("## h2")
 markdown("### h2")
