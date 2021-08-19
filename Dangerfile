@@ -11,7 +11,7 @@ warn("warn")
 fail("fail-1")
 fail("fail-2")
 fail("fail-3")
-fail("fail", file: "Gemfile", line: 1)
+fail("fail")
 
 markdown("## h2")
 markdown("### h3")
