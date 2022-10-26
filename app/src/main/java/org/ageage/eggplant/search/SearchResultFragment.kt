@@ -146,6 +146,7 @@ class SearchResultFragment : Fragment(), FeedItemAdapter.OnClickListener,
                         viewModel.loadNextPage()
                     }
                 }
+                SearchResultViewModel.Status.LoadingNextPage -> {}
             }
         })
     }

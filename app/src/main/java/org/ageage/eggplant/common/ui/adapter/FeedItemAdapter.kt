@@ -102,6 +102,7 @@ class FeedItemAdapter(
                     holder.binding.linkUrl.text = item.item.link
                 }
             }
+            FeedItemAdapterItem.Progress -> {}
         }
     }
 
