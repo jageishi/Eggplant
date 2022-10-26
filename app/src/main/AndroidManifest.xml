@@ -7,7 +7,7 @@
 
     <application
         android:name=".App"
-        android:allowBackup="true"
+        android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
@@ -34,6 +34,9 @@
         <activity android:name=".search.SearchActivity" />
         <activity
             android:name=".search.SearchResultActivity"
+            android:theme="@style/AppTheme.ActionBar" />
+        <activity
+            android:name=".login.LoginActivity"
             android:theme="@style/AppTheme.ActionBar" />
         <activity
             android:name="com.google.android.gms.oss.licenses.OssLicensesMenuActivity"

@@ -8,5 +8,8 @@ enum class Endpoint(
     ),
     HATENA_STAR(
         "https://s.hatena.com"
+    ),
+    HATENA_API(
+        "https://bookmark.hatenaapis.com"
     )
 }

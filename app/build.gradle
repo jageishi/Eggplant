@@ -18,8 +18,20 @@ android {
         versionName "0.9.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
+
     buildTypes {
+
+        Properties properties = new Properties()
+        properties.load(project.rootProject.file('local.properties').newDataInputStream())
+
+        debug {
+            buildConfigField("String", "CONSUMER_KEY", properties.getProperty("CONSUMER_KEY_DEBUG"))
+            buildConfigField("String", "CONSUMER_SECRET", properties.getProperty("CONSUMER_SECRET_DEBUG"))
+        }
+
         release {
+            buildConfigField("String", "CONSUMER_KEY", properties.getProperty("CONSUMER_KEY"))
+            buildConfigField("String", "CONSUMER_SECRET", properties.getProperty("CONSUMER_SECRET"))
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
@@ -57,6 +69,9 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.8.9'
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.1'
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.1'
+    implementation 'com.google.code.gson:gson:2.8.5'
+    implementation "se.akerfeldt:okhttp-signpost:1.1.0"
+    debugImplementation 'com.facebook.stetho:stetho:1.5.1'
 
     def okhttp_version = '4.2.0'
     implementation "com.squareup.okhttp3:okhttp:$okhttp_version"
@@ -67,6 +82,17 @@ dependencies {
     implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofit_version"
     implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
 
+    def scribe_java_version = '6.9.0'
+    implementation "com.github.scribejava:scribejava:$scribe_java_version"
+    implementation "com.github.scribejava:scribejava-core:$scribe_java_version"
+
+    def room_version = "2.2.2"
+    implementation "androidx.room:room-runtime:$room_version"
+    kapt "androidx.room:room-compiler:$room_version"
+
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.1.0'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.1.0'
+    testImplementation 'junit:junit:4.12'
     implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1'
     testImplementation 'junit:junit:4.13.2'
