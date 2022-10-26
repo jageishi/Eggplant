@@ -21,14 +21,14 @@ class BookmarksActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_bookmarks)
         intent?.let {
-            title = it.getStringExtra(TITLE)
-            url = it.getStringExtra(URL)
+            title = it.getStringExtra(TITLE) ?: ""
+            url = it.getStringExtra(URL) ?: ""
         }
         initViews()
     }
 
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        when (item?.itemId) {
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
             android.R.id.home -> finish()
         }
         return super.onOptionsItemSelected(item)
